@@ -1,7 +1,5 @@
 package carservicecrm.controller;
 
-
-
 import carservicecrm.model.User;
 import carservicecrm.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +23,8 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/profile")
-    public String profile(Principal principal,
-                          Model model) {
-        User user = userService.getUserByPrincipal(principal);
-        model.addAttribute("user", user);
-        return "profile";
-    }
+
+    //Post mapping для авторизации
 
     @GetMapping("/registration")
     public String registration(Principal principal, Model model) {
@@ -39,20 +32,13 @@ public class UserController {
         return "registration";
     }
 
-
     @PostMapping("/registration")
     public String createUser(User user, Model model) {
         if (!userService.createUser(user)) {
-            model.addAttribute("errorMessage", "Пользователь с email: " + user.getEmail() + " уже существует");
+            model.addAttribute("errorMessage", "Пользователь с email: " + user.getEmail() + " уже существует. Авторизуйтесь.");
             return "registration";
         }
         return "redirect:/login";
     }
 
-    @GetMapping("/user/{user}")
-    public String userInfo(@PathVariable("user") User user, Model model, Principal principal) {
-        model.addAttribute("user", user);
-        model.addAttribute("userByPrincipal", userService.getUserByPrincipal(principal));
-        return "user-info";
-    }
 }
