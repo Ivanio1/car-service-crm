@@ -17,7 +17,7 @@ public class Image {
     @Column(name = "bytes", columnDefinition = "pg_largeobject")
     private byte[] bytes;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Product product;
+    private Offer offer;
 
     public Long getId() {
         return id;
@@ -75,11 +75,11 @@ public class Image {
         this.bytes = bytes;
     }
 
-    public Product getProduct() {
-        return product;
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public Offer getOffer() {
+        return offer;
     }
 }

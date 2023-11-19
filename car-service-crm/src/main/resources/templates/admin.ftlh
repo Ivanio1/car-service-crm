@@ -1,15 +1,15 @@
 <#import "blocks/template.ftlh" as t>
 <@t.template user>
-    `<h1 style="text-align: center">Admin Panel</h1><hr>
+    <h1 style="text-align: center">Панель администратора</h1><hr>
     <table class="table table-hover table-dark">
         <tr>
-            <th scope="col">Email</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Activity</th>
-            <th scope="col">Roles</th>
-            <th scope="col">Ban</th>
-            <th scope="col">Editing</th>
-            <th scope="col">Detailed information</th>
+            <th scope="col">Почта</th>
+            <th scope="col">Номер телефона</th>
+            <th scope="col">Активность</th>
+            <th scope="col">Роль</th>
+            <th scope="col">Забанить</th>
+            <th scope="col">Редактировать</th>
+            <th scope="col">Подробная информация</th>
         </tr>
         <#list users as user>
             <tr>
@@ -23,11 +23,11 @@
                         <input type="submit" class="btn btn-light" value="Бан">
                     </form>
                 </th>
-                <th><a href="/admin/user/edit/${user.id}">Editing</a></th>
-                <th><a href="/user/${user.id}">Detailed information</a></th>
+                <th><a href="/admin/user/edit/${user.id}">Редактировать</a></th>
+                <th><a href="/user/${user.id}">Смотреть</a></th>
             </tr>
         <#else>
-            <h3>No users</h3>
+            <h3>Нет пользователей</h3>
         </#list>
     </table>
 </@t.template>
