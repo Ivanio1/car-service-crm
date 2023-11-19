@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "client")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,7 @@ public class User implements UserDetails {
     private String email;
     private String phoneNumber;
     private String name;
-    private boolean active;
-    private String activationCode;
+    private String surname;
     @Column(length = 1000)
     private String password;
 
@@ -64,20 +63,12 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public boolean isActive() {
-        return active;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public String getActivationCode() {
-        return activationCode;
-    }
-
-    public void setActivationCode(String activationCode) {
-        this.activationCode = activationCode;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public void setPassword(String password) {
@@ -127,6 +118,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return active;
+        return true;
     }
 }

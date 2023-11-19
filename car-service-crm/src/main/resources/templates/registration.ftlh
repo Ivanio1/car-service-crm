@@ -6,12 +6,21 @@
 
     <form class="row g-3 requires-validation" novalidate action="/registration" method="post">
         <div class="col-md-12">
-            <label for="name" class="form-label">Имя пользователя</label>
+            <label for="name" class="form-label">Имя</label>
             <input type="text" class="form-control" required id="name" name="name">
             <div class="valid-feedback">
             </div>
             <div class="invalid-feedback">
-                Неверное имя пользователя
+                Неверное имя
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label for="surname" class="form-label">Фамилия</label>
+            <input type="text" class="form-control" required id="surname" name="surname">
+            <div class="valid-feedback">
+            </div>
+            <div class="invalid-feedback">
+                Неверная фамилия
             </div>
         </div>
         <div class="col-md-12">
