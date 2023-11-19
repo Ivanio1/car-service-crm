@@ -4,7 +4,6 @@ import carservicecrm.models.enums.Role;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.*;
 
 @Entity
@@ -17,12 +16,10 @@ public class User implements UserDetails {
     private String email;
     private String phoneNumber;
     private String name;
+    private String surname;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn
-    private Image avatar;
+
     private boolean active;
-    private String activationCode;
     @Column(length = 1000)
     private String password;
 
@@ -43,14 +40,6 @@ public class User implements UserDetails {
 
     public boolean isAdmin() {
         return roles.contains(Role.ROLE_ADMIN);
-    }
-
-    public Image getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(Image avatar) {
-        this.avatar = avatar;
     }
 
     public List<Product> getProducts() {
@@ -77,6 +66,14 @@ public class User implements UserDetails {
         this.email = email;
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -99,14 +96,6 @@ public class User implements UserDetails {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public String getActivationCode() {
-        return activationCode;
-    }
-
-    public void setActivationCode(String activationCode) {
-        this.activationCode = activationCode;
     }
 
     public void setPassword(String password) {
