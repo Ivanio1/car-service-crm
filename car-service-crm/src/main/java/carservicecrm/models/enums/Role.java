@@ -1,4 +1,4 @@
-package carservicecrm.model.enums;
+package carservicecrm.models.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 

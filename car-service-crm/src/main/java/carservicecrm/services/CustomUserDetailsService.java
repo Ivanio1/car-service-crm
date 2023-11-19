@@ -1,6 +1,6 @@
-package carservicecrm.service;
+package carservicecrm.services;
 
-import carservicecrm.repository.UserRepository;
+import carservicecrm.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,6 +1,6 @@
-package carservicecrm.config;
+package carservicecrm.configs;
 
-import carservicecrm.service.CustomUserDetailsService;
+import carservicecrm.services.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ public class SecurityConfig {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers( "/", "/images/**", "/registration", "/user/**", "/static/**").permitAll()
+                        .requestMatchers( "/", "/product/**", "/images/**", "/registration", "/user/**", "/static/**").permitAll()
                         .requestMatchers("/product/**", "/image/**","/user/**")
                         .hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
                         .anyRequest().authenticated()

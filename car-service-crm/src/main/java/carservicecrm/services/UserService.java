@@ -1,9 +1,8 @@
-package carservicecrm.service;
+package carservicecrm.services;
 
-
-import carservicecrm.model.User;
-import carservicecrm.model.enums.Role;
-import carservicecrm.repository.UserRepository;
+import carservicecrm.models.User;
+import carservicecrm.models.enums.Role;
+import carservicecrm.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +25,7 @@ public class UserService {
     public boolean createUser(User user) {
         String userEmail = user.getEmail();
         if (userRepository.findByEmail(userEmail) != null) return false;
+        user.setActive(true);
         user.getRoles().add(Role.ROLE_USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         log.info("Saving new User with email: {}", userEmail);
@@ -36,7 +36,19 @@ public class UserService {
         return userRepository.findAll();
     }
 
-
+    public void banUser(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            if (user.isActive()) {
+                user.setActive(false);
+                log.info("Ban user with id = {}; email: {}", user.getId(), user.getEmail());
+            } else {
+                user.setActive(true);
+                log.info("Unban user with id = {}; email: {}", user.getId(), user.getEmail());
+            }
+        }
+        userRepository.save(user);
+    }
     public void changeUserRoles(User user, Map<String, String> form) {
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)

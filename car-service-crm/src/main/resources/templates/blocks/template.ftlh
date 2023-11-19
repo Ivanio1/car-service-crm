@@ -11,7 +11,6 @@
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
               crossorigin="anonymous">
 
-        <script src="/static/js/script.js"></script>
         <title>CRM</title>
     </head>
     <body>
