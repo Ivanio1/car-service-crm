@@ -24,8 +24,8 @@ public class SecurityConfig {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers( "/", "/product/**", "/images/**", "/registration", "/user/**", "/static/**").permitAll()
-                        .requestMatchers("/product/**", "/image/**","/user/**")
+                        .requestMatchers( "/", "/offer/**", "/images/**", "/registration", "/user/**", "/static/**").permitAll()
+                        .requestMatchers("/offer/**", "/image/**","/user/**")
                         .hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
                         .anyRequest().authenticated()
                 )

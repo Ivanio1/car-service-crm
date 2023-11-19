@@ -39,18 +39,33 @@ public class OfferController {
         return "offer-info";
     }
 
-//    @PostMapping("/offer/create")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-//    public String createProduct(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,
-//                                @RequestParam("file3") MultipartFile file3, Offer offer, Principal principal) throws IOException {
-//        offerService.saveProduct(principal, offer, file1, file2, file3);
-//        return "redirect:/my/products";
-//    }
-//
-//    @PostMapping("/offer/delete/{id}")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-//    public String deleteProduct(@PathVariable Long id, Principal principal) {
-//        offerService.deleteOffer(id);
-//        return "redirect:/my/products";
-//    }
+    @GetMapping("/offer/addform")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String offeradd(Model model, Principal principal) {
+        model.addAttribute("user", offerService.getUserByPrincipal(principal));
+        return "add-offer";
+    }
+
+    @GetMapping("/offer/deleteform")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String offerdeleteform(@RequestParam(name = "searchWord", required = false) String title,Model model, Principal principal) {
+        model.addAttribute("user", offerService.getUserByPrincipal(principal));
+        model.addAttribute("offers", offerService.listOffers(title));
+        return "delete-offer";
+    }
+
+    @PostMapping("/offer/create")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String createProduct(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,
+                                @RequestParam("file3") MultipartFile file3, Offer offer, Principal principal) throws IOException {
+        offerService.saveProduct(principal, offer, file1, file2, file3);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/offer/delete/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String deleteProduct(@PathVariable Long id, Principal principal) {
+        offerService.deleteOffer(id);
+        return "redirect:/admin";
+    }
 }

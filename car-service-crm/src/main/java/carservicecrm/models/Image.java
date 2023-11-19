@@ -14,7 +14,7 @@ public class Image {
     private String contentType;
     private boolean previewImage;
     @Lob
-    @Column(name = "bytes", columnDefinition = "pg_largeobject")
+    @Column(name = "bytes", columnDefinition = "bigint")
     private byte[] bytes;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Offer offer;

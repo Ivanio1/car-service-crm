@@ -22,11 +22,18 @@ import java.util.Map;
 public class AdminController {
     private final UserService userService;
 
+
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
-        model.addAttribute("users", userService.list());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin";
+    }
+
+    @GetMapping("/admin/users")
+    public String adminusers(Model model, Principal principal) {
+        model.addAttribute("users", userService.list());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-users";
     }
 
     @PostMapping("/admin/user/ban/{id}")

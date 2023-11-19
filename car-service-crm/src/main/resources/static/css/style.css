@@ -1,9 +1,10 @@
-.product:hover {
+.offer:hover {
     transition: 0.5s;
     transform: scale(1.02);
 }
 
-.product-link {
+.offer-link {
     color: #000 !important;
     text-decoration: none
 }
+

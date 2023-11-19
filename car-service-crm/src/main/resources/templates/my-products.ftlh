@@ -62,7 +62,7 @@
     </div>
     <div class="card-columns">
         <#list products as product>
-            <a href="/product/${product.id}" class="product-link">
+            <a href="/product/${product.id}" class="offer-link">
                 <div class="card text-white bg-dark my-3 product">
                     <div class="card-top">
                         <form action="/product/delete/${product.id}" method="post">

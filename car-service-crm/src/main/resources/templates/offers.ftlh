@@ -13,18 +13,22 @@
         </div>
     </form>
     <hr>
-    <div class="card-columns">
         <#list offers as offer>
+            <div style="display:inline-block; width: 20%; margin-left: 10%">
             <a href="/offer/${offer.id}" class="offer-link">
-                <div class="card text-white bg-dark my-3 product">
+                <div class="card text-white bg-dark my-3 offer">
+                    <img src="/images/${offer.previewImageId}"
+                         class="card-img-top" >
                     <div class="card-body">
                         <h5 class="card-title">${offer.name}</h5>
                         <p class="card-text">${offer.price} ₽</p>
                     </div>
                 </div>
             </a>
+
+            </div>
         <#else>
             <h1 style="text-align: center">Ничего не найдено</h1>
         </#list>
-    </div>
+
 </@t.template>
