@@ -21,4 +21,8 @@ public class EmployeeService {
         }
         return true;
     }
+
+    public Employee getEmployee(Long user_id){
+       return employeeRepository.findByUserId(user_id);
+    }
 }

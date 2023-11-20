@@ -1,8 +1,8 @@
 package carservicecrm.repositories;
 
 import carservicecrm.models.Employee;
+import carservicecrm.models.Worker;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EmployeeRepository extends JpaRepository<Employee,Long> {
-        Employee findByUserId(Long user_id);
+public interface WorkerRepository extends JpaRepository<Worker,Long> {
 }

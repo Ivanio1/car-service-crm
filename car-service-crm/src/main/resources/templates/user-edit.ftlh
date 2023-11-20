@@ -22,7 +22,20 @@
         <br>
         <input type="hidden" value="${user.id}" name="userId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
-        <button id="saveButton" type="submit" class="btn btn-dark" style="display: none;">Сохранить работника</button>
+        <button id="saveButton" type="submit" class="btn btn-dark" style="display: none;">Сохранить сотрудника</button>
+        <br>
+    </form>
+
+    <form action="/admin/add/worker" method="post">
+        <hr>
+        <div id="specializationField" style="display: none;">
+            <p>Сначала сохраните роль пользователя и его СНИЛС при роли EMPLOYEE!</p>
+            <label>Специализация рабочего: <input type="text" name="specialization" required></label>
+        </div>
+        <br>
+        <input type="hidden" value="${user.id}" name="userId">
+        <input type="hidden" value="${_csrf.token}" name="_csrf">
+        <button id="saveButton1" type="submit" class="btn btn-dark" style="display: none;">Сохранить работника</button>
         <br>
     </form>
     <script>
@@ -32,12 +45,24 @@
             var textField = document.getElementById("snilsField");
             var saveButton = document.getElementById("saveButton");
 
+            var checkbox1 = document.querySelector('input[name="ROLE_WORKER"]');
+            var textField1 = document.getElementById("specializationField");
+            var saveButton1 = document.getElementById("saveButton1");
+
             if (checkbox.checked) {
                 textField.style.display = "block";
                 saveButton.style.display = "block";
             } else {
                 textField.style.display = "none";
                 saveButton.style.display = "none";
+            }
+
+            if (checkbox1.checked) {
+                textField1.style.display = "block";
+                saveButton1.style.display = "block";
+            } else {
+                textField1.style.display = "none";
+                saveButton1.style.display = "none";
             }
         }
     </script>

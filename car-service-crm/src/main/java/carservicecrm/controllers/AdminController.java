@@ -3,9 +3,11 @@ package carservicecrm.controllers;
 
 import carservicecrm.models.Employee;
 import carservicecrm.models.User;
+import carservicecrm.models.Worker;
 import carservicecrm.models.enums.Role;
 import carservicecrm.services.EmployeeService;
 import carservicecrm.services.UserService;
+import carservicecrm.services.WorkerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import java.util.Map;
 public class AdminController {
     private final UserService userService;
     private final EmployeeService employeeService;
+    private final WorkerService workerService;
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
@@ -36,6 +39,13 @@ public class AdminController {
         model.addAttribute("users", userService.list());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin-users";
+    }
+
+    @GetMapping("/admin/workers")
+    public String adminworkers(Model model, Principal principal) {
+        model.addAttribute("workers", workerService.list());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-workers";
     }
 
     @PostMapping("/admin/user/ban/{id}")
@@ -68,6 +78,16 @@ public class AdminController {
         if (!employeeService.saveEmployee(employee)) {
             return "redirect:/error";
         }
+        return "redirect:/admin/user/edit/" + user.getId();
+    }
+
+    @PostMapping("/admin/add/worker")
+    public String addWorker(@RequestParam("userId") User user, @RequestParam String specialization) {
+        Employee employee = employeeService.getEmployee(user.getId());
+        Worker worker = new Worker();
+        worker.setEmployee(employee);
+        worker.setSpecialization(specialization);
+        workerService.saveWorker(worker);
         return "redirect:/admin/user/edit/" + user.getId();
     }
 

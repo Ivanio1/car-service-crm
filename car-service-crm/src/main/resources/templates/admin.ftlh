@@ -22,7 +22,7 @@
             </a>
         </div>
         <hr>
-        <h2 style="text-align: center">Просмотр клиентов и работников</h2>
+        <h2 style="text-align: center">Просмотр и изменение всех пользователей.</h2>
         <div style=" display: flex;
             height: 20%;
             flex-flow: row wrap;
@@ -31,7 +31,26 @@
             <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%"
                data-toggle="collapse" href="/admin/users" role="button"
                aria-expanded="true" aria-controls="collapseExample">
+                Пользователи
+            </a>
+        </div>
+
+        <hr>
+        <h2 style="text-align: center">Просмотр клиентов, работников, операторов и изготовителей деталей.</h2>
+        <div style=" display: flex;
+            height: 20%;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: center;">
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%"
+               data-toggle="collapse" href="" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
                 Клиенты
+            </a>
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%;margin-left: 5%"
+               data-toggle="collapse" href="/admin/workers" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                Работники
             </a>
         </div>
     </div>
