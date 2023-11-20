@@ -64,6 +64,13 @@ public class AdminController {
         return "admin-manufacturers";
     }
 
+    @GetMapping("/admin/employees")
+    public String adminemployees(Model model, Principal principal) {
+        model.addAttribute("employees", employeeService.list());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-employees";
+    }
+
     @PostMapping("/admin/user/ban/{id}")
     public String userBan(@PathVariable("id") Long id) {
         userService.banUser(id);

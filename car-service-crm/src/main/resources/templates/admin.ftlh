@@ -36,7 +36,8 @@
         </div>
 
         <hr>
-        <h2 style="text-align: center">Просмотр клиентов, работников, операторов и изготовителей деталей.</h2>
+        <h2 style="text-align: center">Просмотр клиентов и сотрудников - работников, операторов и изготовителей
+            деталей.</h2>
         <div style=" display: flex;
             height: 20%;
             flex-flow: row wrap;
@@ -48,21 +49,33 @@
                 Клиенты
             </a>
             <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%;margin-left: 5%"
+               data-toggle="collapse" href="/admin/employees" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                Сотрудники
+            </a>
+        </div>
+        <hr>
+        <div style=" display: flex;
+            height: 20%;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: center;">
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 15%;margin-left: 5%"
                data-toggle="collapse" href="/admin/workers" role="button"
                aria-expanded="true" aria-controls="collapseExample">
                 Работники
             </a>
 
-            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%;margin-left: 5%"
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 15%;margin-left: 5%"
                data-toggle="collapse" href="" role="button"
                aria-expanded="true" aria-controls="collapseExample">
                 Операторы
             </a>
 
-            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%;margin-left: 5%"
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 15%;margin-left: 5%"
                data-toggle="collapse" href="/admin/manufacturers" role="button"
                aria-expanded="true" aria-controls="collapseExample">
-                Изготовители деталей
+                Изготовители
             </a>
         </div>
     </div>
