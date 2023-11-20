@@ -1,5 +1,6 @@
 package carservicecrm.services;
 
+import carservicecrm.models.Employee;
 import carservicecrm.models.User;
 import carservicecrm.models.enums.Role;
 import carservicecrm.repositories.UserRepository;
@@ -76,6 +77,17 @@ public class UserService {
     public User getUserByPrincipal(Principal principal) {
         if (principal == null) return new User();
         return userRepository.findByEmail(principal.getName());
+    }
+
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElse(null);
+        if (user != null) {
+            userRepository.delete(user);
+            log.info("Employee with id = {} was deleted", id);
+        } else {
+            log.error("Employee with id = {} is not found", id);
+        }
     }
 
 }

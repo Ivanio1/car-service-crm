@@ -1,6 +1,7 @@
 package carservicecrm.services;
 
 import carservicecrm.models.Employee;
+import carservicecrm.models.Offer;
 import carservicecrm.repositories.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,4 +26,5 @@ public class EmployeeService {
     public Employee getEmployee(Long user_id){
        return employeeRepository.findByUserId(user_id);
     }
+
 }

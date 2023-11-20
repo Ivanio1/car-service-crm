@@ -12,6 +12,7 @@
             <th scope="col">Забанить</th>
             <th scope="col">Редактировать</th>
             <th scope="col">Подробная информация</th>
+            <th scope="col">Удалить пользователя</th>
         </tr>
         </thead>
         <#list users as user>
@@ -28,6 +29,12 @@
                 </td>
                 <td><a href="/admin/user/edit/${user.id}">Редактировать</a></td>
                 <td><a href="/user/${user.id}">Смотреть</a></td>
+                <td> <form action="/delete/user/${user.id}" method="post">
+                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                        <button type="submit" class="btn btn-danger m-3">
+                            Удалить
+                        </button>
+                    </form></td>
             </tr>
         <#else>
             <h3>Нет пользователей</h3>

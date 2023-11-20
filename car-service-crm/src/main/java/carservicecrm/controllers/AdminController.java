@@ -47,7 +47,6 @@ public class AdminController {
         return "admin-clients";
     }
 
-
     @GetMapping("/admin/workers")
     public String adminworkers(Model model, Principal principal) {
         model.addAttribute("workers", workerService.list());

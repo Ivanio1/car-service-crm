@@ -3,6 +3,7 @@ package carservicecrm.controllers;
 import carservicecrm.models.User;
 import carservicecrm.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,5 +55,12 @@ public class UserController {
         //Добавить purchases
 
         return "user-info";
+    }
+
+    @PostMapping("/delete/user/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public String deleteProduct(@PathVariable Long id, Principal principal) {
+        userService.deleteUser(id);
+        return "redirect:/admin";
     }
 }
