@@ -52,6 +52,18 @@
                aria-expanded="true" aria-controls="collapseExample">
                 Работники
             </a>
+
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%;margin-left: 5%"
+               data-toggle="collapse" href="" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                Операторы
+            </a>
+
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%;margin-left: 5%"
+               data-toggle="collapse" href="/admin/manufacturers" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                Изготовители деталей
+            </a>
         </div>
     </div>
 </@t.template>

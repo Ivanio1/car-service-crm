@@ -7,6 +7,7 @@ public enum Role implements GrantedAuthority {
     ROLE_OPERATOR,
     ROLE_WORKER,
     ROLE_EMPLOYEE,
+    ROLE_MANUFACTURER,
     ROLE_ADMIN;
 
     @Override

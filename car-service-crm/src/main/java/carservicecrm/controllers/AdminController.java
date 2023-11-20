@@ -2,10 +2,12 @@ package carservicecrm.controllers;
 
 
 import carservicecrm.models.Employee;
+import carservicecrm.models.Manufacturer;
 import carservicecrm.models.User;
 import carservicecrm.models.Worker;
 import carservicecrm.models.enums.Role;
 import carservicecrm.services.EmployeeService;
+import carservicecrm.services.ManufacturerService;
 import carservicecrm.services.UserService;
 import carservicecrm.services.WorkerService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class AdminController {
     private final UserService userService;
     private final EmployeeService employeeService;
     private final WorkerService workerService;
+    private final ManufacturerService manufacturerService;
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
@@ -52,6 +55,13 @@ public class AdminController {
         model.addAttribute("workers", workerService.list());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin-workers";
+    }
+
+    @GetMapping("/admin/manufacturers")
+    public String adminmanufacturers(Model model, Principal principal) {
+        model.addAttribute("manufacturers", manufacturerService.list());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-manufacturers";
     }
 
     @PostMapping("/admin/user/ban/{id}")
@@ -96,5 +106,17 @@ public class AdminController {
         workerService.saveWorker(worker);
         return "redirect:/admin/user/edit/" + user.getId();
     }
+
+
+    @PostMapping("/admin/add/manufacturer")
+    public String addmanufacturer(@RequestParam("userId") User user, @RequestParam String detail_specialization) {
+        Employee employee = employeeService.getEmployee(user.getId());
+        Manufacturer manufacturer = new Manufacturer();
+        manufacturer.setEmployee(employee);
+        manufacturer.setDetail_specialization(detail_specialization);
+        manufacturerService.saveManufacturer(manufacturer);
+        return "redirect:/admin/user/edit/" + user.getId();
+    }
+
 
 }
