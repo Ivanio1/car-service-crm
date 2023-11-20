@@ -1,8 +1,10 @@
 package carservicecrm.controllers;
 
 
+import carservicecrm.models.Employee;
 import carservicecrm.models.User;
 import carservicecrm.models.enums.Role;
+import carservicecrm.services.EmployeeService;
 import carservicecrm.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +23,7 @@ import java.util.Map;
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AdminController {
     private final UserService userService;
-
+    private final EmployeeService employeeService;
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
@@ -55,4 +57,16 @@ public class AdminController {
         userService.changeUserRoles(user, form);
         return "redirect:/admin/users";
     }
+
+    @PostMapping("/admin/add/employee")
+    public String addEmployee(@RequestParam("userId") User user, @RequestParam String snils) {
+        Employee employee = new Employee();
+        employee.setName(user.getName());
+        employee.setSnils(snils);
+        employee.setSurname(user.getSurname());
+        employee.setUser(user);
+        employeeService.saveEmployee(employee);
+        return "redirect:/admin/user/edit/"+user.getId();
+    }
+
 }
