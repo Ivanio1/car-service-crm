@@ -9,10 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,8 +29,21 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
-    public List<User> list(){
+
+    public List<User> list() {
         return userRepository.findAll();
+    }
+
+    public List<User> listClients() {
+        List<User> users = userRepository.findAll();
+        List<User> clients = new ArrayList<>();
+        for (User user : users
+        ) {
+            if(user.getRoles().contains(Role.ROLE_USER)){
+                clients.add(user);
+            }
+        }
+        return clients;
     }
 
     public void banUser(Long id) {
@@ -49,6 +59,7 @@ public class UserService {
         }
         userRepository.save(user);
     }
+
     public void changeUserRoles(User user, Map<String, String> form) {
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)
