@@ -25,9 +25,6 @@
         <button id="saveButton" type="submit" class="btn btn-dark" style="display: none;">Сохранить работника</button>
         <br>
     </form>
-    <#if errorMessage??>
-        <h2 style="color: red">${errorMessage}</h2>
-    </#if>
     <script>
         window.addEventListener("load", toggleTextField);
         function toggleTextField() {

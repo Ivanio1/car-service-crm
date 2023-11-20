@@ -13,12 +13,12 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    public boolean saveEmployee(Employee employee){
+    public boolean saveEmployee(Employee employee) {
         try{
             employeeRepository.save(employee);
-        }catch(Exception e){
+        }catch (Exception e){
             return false;
         }
-       return true;
+        return true;
     }
 }

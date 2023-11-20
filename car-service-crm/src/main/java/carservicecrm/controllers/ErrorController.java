@@ -15,7 +15,7 @@ public class ErrorController {
     }
 
     @GetMapping("/error")
-    public String showErrorPage(Model model) {
+    public String showErrorPage() {
         return "error";
     }
 }

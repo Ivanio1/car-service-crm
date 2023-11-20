@@ -65,8 +65,10 @@ public class AdminController {
         employee.setSnils(snils);
         employee.setSurname(user.getSurname());
         employee.setUser(user);
-        employeeService.saveEmployee(employee);
-        return "redirect:/admin/user/edit/"+user.getId();
+        if (!employeeService.saveEmployee(employee)) {
+            return "redirect:/error";
+        }
+        return "redirect:/admin/user/edit/" + user.getId();
     }
 
 }
