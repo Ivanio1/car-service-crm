@@ -90,4 +90,8 @@ public class UserService {
         }
     }
 
+    public List<User> activeUsers(){
+        return userRepository.findAllActiveUsers();
+    }
+
 }

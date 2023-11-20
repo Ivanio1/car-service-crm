@@ -39,6 +39,14 @@ public class AdminController {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin-users";
     }
+
+    @GetMapping("/admin/active/users")
+    public String adminactiveusers(Model model, Principal principal) {
+        model.addAttribute("users", userService.activeUsers());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-active-users";
+    }
+
     @GetMapping("/admin/clients")
     public String adminclients(Model model, Principal principal) {
         model.addAttribute("clients", userService.listClients());

@@ -1,6 +1,6 @@
 <#import "blocks/template.ftlh" as t>
 <@t.template user>
-    <h1 style="text-align: center">Пользователи</h1>
+    <h1 style="text-align: center">Активные пользователи</h1>
     <hr>
     <table class="table table-hover table-dark">
         <thead>
@@ -29,20 +29,17 @@
                 </td>
                 <td><a href="/admin/user/edit/${user.id}">Редактировать</a></td>
                 <td><a href="/user/${user.id}">Смотреть</a></td>
-                <td>
-                    <form action="/delete/user/${user.id}" method="post">
+                <td> <form action="/delete/user/${user.id}" method="post">
                         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                         <button type="submit" class="btn btn-danger m-3">
                             Удалить
                         </button>
-                    </form>
-                </td>
+                    </form></td>
             </tr>
         <#else>
             <h3>Нет пользователей</h3>
         </#list>
     </table>
-    <a href="/admin/active/users">Активные пользователи</a>
-
+    <a href="/admin/users">Все пользователи</a>
 
 </@t.template>
