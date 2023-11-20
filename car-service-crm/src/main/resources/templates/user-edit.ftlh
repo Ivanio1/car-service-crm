@@ -36,6 +36,20 @@
         <button id="saveButton1" type="submit" class="btn btn-dark" style="display: none;">Сохранить работника</button>
     </form>
 
+    <form action="/admin/add/operator" method="post">
+        <div id="timeField" style="display: none;">
+            <hr>
+            <p>Сначала сохраните роль пользователя и его СНИЛС при роли EMPLOYEE!</p>
+            <label>Начало рабочего дня: <input type="text" name="workingTimeStart" required></label>
+            <label>Конец рабочего дня: <input type="text" name="workingTimeEnd" required></label>
+
+        </div>
+        <input type="hidden" value="${user.id}" name="userId">
+        <input type="hidden" value="${_csrf.token}" name="_csrf">
+        <br>
+        <button id="saveButton3" type="submit" class="btn btn-dark" style="display: none;">Сохранить оператора</button>
+    </form>
+
     <form action="/admin/add/manufacturer" method="post">
         <div id="detailspecializationField" style="display: none;">
             <hr>
@@ -62,6 +76,10 @@
             var textField2 = document.getElementById("detailspecializationField");
             var saveButton2 = document.getElementById("saveButton2");
 
+            var checkbox3 = document.querySelector('input[name="ROLE_OPERATOR"]');
+            var textField3 = document.getElementById("timeField");
+            var saveButton3 = document.getElementById("saveButton3");
+
             if (checkbox.checked) {
                 textField.style.display = "block";
                 saveButton.style.display = "block";
@@ -84,6 +102,14 @@
             } else {
                 textField2.style.display = "none";
                 saveButton2.style.display = "none";
+            }
+
+            if (checkbox3.checked) {
+                textField3.style.display = "block";
+                saveButton3.style.display = "block";
+            } else {
+                textField3.style.display = "none";
+                saveButton3.style.display = "none";
             }
         }
     </script>

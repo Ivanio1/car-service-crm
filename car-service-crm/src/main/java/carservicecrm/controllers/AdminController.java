@@ -1,15 +1,9 @@
 package carservicecrm.controllers;
 
 
-import carservicecrm.models.Employee;
-import carservicecrm.models.Manufacturer;
-import carservicecrm.models.User;
-import carservicecrm.models.Worker;
+import carservicecrm.models.*;
 import carservicecrm.models.enums.Role;
-import carservicecrm.services.EmployeeService;
-import carservicecrm.services.ManufacturerService;
-import carservicecrm.services.UserService;
-import carservicecrm.services.WorkerService;
+import carservicecrm.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -20,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.time.LocalTime;
 import java.util.Map;
 
 @Controller
@@ -30,6 +25,7 @@ public class AdminController {
     private final EmployeeService employeeService;
     private final WorkerService workerService;
     private final ManufacturerService manufacturerService;
+    private final OperatorService operatorService;
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
@@ -69,6 +65,12 @@ public class AdminController {
         model.addAttribute("employees", employeeService.list());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin-employees";
+    }
+    @GetMapping("/admin/operators")
+    public String adminoperators(Model model, Principal principal) {
+        model.addAttribute("operators", operatorService.list());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-operators";
     }
 
     @PostMapping("/admin/user/ban/{id}")
@@ -122,6 +124,17 @@ public class AdminController {
         manufacturer.setEmployee(employee);
         manufacturer.setDetail_specialization(detail_specialization);
         manufacturerService.saveManufacturer(manufacturer);
+        return "redirect:/admin/user/edit/" + user.getId();
+    }
+
+    @PostMapping("/admin/add/operator")
+    public String addoperator(@RequestParam("userId") User user, @RequestParam String workingTimeStart,@RequestParam String workingTimeEnd) {
+        Employee employee = employeeService.getEmployee(user.getId());
+        Operator operator = new Operator();
+        operator.setEmployee(employee);
+        operator.setWorkingTimeStart(LocalTime.parse(workingTimeStart));
+        operator.setWorkingTimeEnd(LocalTime.parse(workingTimeEnd));
+        operatorService.saveOperator(operator);
         return "redirect:/admin/user/edit/" + user.getId();
     }
 

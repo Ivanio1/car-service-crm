@@ -1,7 +1,5 @@
 package carservicecrm.services;
 
-import carservicecrm.models.Employee;
-import carservicecrm.models.User;
 import carservicecrm.models.Worker;
 import carservicecrm.repositories.WorkerRepository;
 import lombok.RequiredArgsConstructor;
