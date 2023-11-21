@@ -3,7 +3,6 @@
     <div class="koguvcavis-varazdel">
         <div class="sestim-donials">
             <h1 style="text-align: center">Отзывы</h1>
-            <div class="sectionesag"></div>
             <div class="sagestim-lonials">
                 <div class="vemotau-vokusipol">
                     <#list reviews as review>

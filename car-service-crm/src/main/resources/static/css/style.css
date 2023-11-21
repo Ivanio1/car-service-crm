@@ -48,6 +48,8 @@ td{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    overflow-y: scroll;
+    height: 400px;
 }
 .vemotau-vokusipol{
     flex: 33.33%;

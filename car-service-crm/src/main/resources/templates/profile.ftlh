@@ -28,7 +28,7 @@
 
         <form action="/user/add/review" method="post">
             <hr>
-            <h3>Оставить отзыв или обращение</h3>
+            <h3>Оставить отзыв</h3>
             <label>Услуга: <select name="offer" id="offer-select">
                     <option value="">--Выберите услугу--</option>
                      <#list offers as offer>
@@ -42,9 +42,21 @@
             <label>Рейтинг: <input type="number" name="rating" required min="1" max="5"></label>
             <input type="hidden" value="${user.email}" name="email">
             <input type="hidden" value="${_csrf.token}" name="_csrf">
+            <br><br>
             <button id="saveButton" type="submit" class="btn btn-dark" >Отправить</button>
             <hr>
         </form>
+
+        <form action="/user/add/question" method="post">
+            <h3>Появился вопрос?</h3>
+            <input type="text" name="question" required placeholder="Задай его нам" style="border-radius: 7px;">
+            <input type="hidden" value="${user.email}" name="email">
+            <input type="hidden" value="${_csrf.token}" name="_csrf">
+            <br><br>
+            <button id="saveButton" type="submit" class="btn btn-dark">Отправить</button>
+            <hr>
+        </form>
+
         <form action="/logout" method="post">
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <button type="submit" style="text-align: center; width: 100%" class="btn btn-danger mb-2">

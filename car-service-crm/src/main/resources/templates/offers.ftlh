@@ -11,7 +11,7 @@
         <div class="form-row">
             <div class="form-group col-md-10">
                 <label for="searchWord">Поиск</label>
-                <input type="text" name="searchWord" <#if searchWord??>value="${searchWord}"</#if> class="form-control"
+                <input type="text" name="searchWord" <#if searchWord??>value="${searchWord}"</#if> style="width: 100%" class="form-control"
                        id="searchWord">
             </div>
             <br>
