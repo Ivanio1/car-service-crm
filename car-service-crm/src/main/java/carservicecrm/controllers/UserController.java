@@ -1,6 +1,11 @@
 package carservicecrm.controllers;
 
+import carservicecrm.models.Employee;
+import carservicecrm.models.Offer;
+import carservicecrm.models.Review;
 import carservicecrm.models.User;
+import carservicecrm.services.OfferService;
+import carservicecrm.services.ReviewService;
 import carservicecrm.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
@@ -16,6 +22,8 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final ReviewService reviewService;
+    private final OfferService offerService;
 
     @GetMapping("/login")
     public String login(Principal principal, Model model) {
@@ -28,6 +36,7 @@ public class UserController {
                           Model model) {
         User user = userService.getUserByPrincipal(principal);
         model.addAttribute("user", user);
+        model.addAttribute("offers", offerService.listOffers(""));
         return "profile";
     }
 
@@ -63,4 +72,26 @@ public class UserController {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
+
+    @GetMapping("/user/reviews")
+    public String adminusers(Model model, Principal principal) {
+        model.addAttribute("reviews", reviewService.list());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "reviews";
+    }
+
+    @PostMapping("/user/add/review")
+    public String addEmployee(@RequestParam("email") String email, @RequestParam String reviewText,@RequestParam Integer rating,@RequestParam String offer) {
+        Review review = new Review();
+        review.setUser(userService.getUserByEmail(email));
+        review.setReviewText(reviewText);
+        review.setRating(rating);
+        review.setOffer(offerService.getOfferByName(offer));
+        if (!reviewService.saveReview(review)) {
+            return "redirect:/error";
+        }
+        return "redirect:/user/reviews";
+    }
+
+
 }

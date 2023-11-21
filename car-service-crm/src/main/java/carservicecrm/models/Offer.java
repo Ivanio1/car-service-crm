@@ -12,6 +12,7 @@ public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, updatable = false)
     private String name;
     private String description;
     private Integer price;

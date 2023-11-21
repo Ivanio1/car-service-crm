@@ -24,7 +24,7 @@ public class OfferService {
     private final UserRepository userRepository;
 
     public List<Offer> listOffers(String name) {
-        if (name != null && !name.equals("")) return offerRepository.findByName(name);
+        if (name != null && !name.equals("")) return offerRepository.findAllByName(name);
         return offerRepository.findAll();
     }
 
@@ -36,6 +36,10 @@ public class OfferService {
     public Offer getOfferById(Long id) {
         return offerRepository.findById(id).orElse(null);
     }
+    public Offer getOfferByName(String name) {
+        return offerRepository.findByName(name);
+    }
+
 
     public void saveProduct(Principal principal, Offer offer, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
         Image image1;

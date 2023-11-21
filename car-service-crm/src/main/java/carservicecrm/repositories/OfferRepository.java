@@ -9,7 +9,9 @@ import java.util.List;
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
 
-    List<Offer> findByName(String name);
+    Offer findByName(String name);
+
+    List<Offer> findAllByName(String name);
 
 //    @Query
 //            ...

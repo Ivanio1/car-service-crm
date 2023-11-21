@@ -1,5 +1,11 @@
 <#import "blocks/template.ftlh" as t>
 <@t.template user>
+    <div>
+            <button class="btn btn-outline-dark my-2 my-sm-0" type="button"
+                    onclick="window.location.href = '/user/reviews'"  >
+                Отзывы
+            </button>
+    </div>
     <h1 style="text-align: center">Наши услуги</h1><hr>
     <form method="get" action="/">
         <div class="form-row">
@@ -30,5 +36,7 @@
         <#else>
             <h1 style="text-align: center">Ничего не найдено</h1>
         </#list>
+
+
 
 </@t.template>

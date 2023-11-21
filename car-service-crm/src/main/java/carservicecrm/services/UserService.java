@@ -78,6 +78,9 @@ public class UserService {
         if (principal == null) return new User();
         return userRepository.findByEmail(principal.getName());
     }
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
