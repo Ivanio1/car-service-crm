@@ -53,7 +53,10 @@
             <input type="hidden" value="${user.email}" name="email">
             <input type="hidden" value="${_csrf.token}" name="_csrf">
             <br><br>
-            <button id="saveButton" type="submit" class="btn btn-dark">Отправить</button>
+            <button id="saveButton" type="submit" class="btn btn-dark" onclick="toggleTextField()">Отправить</button>
+            <p id="textField" style="width: 100%;align-content: center;align-items: center;display: none">
+                Скоро с вами свяжутся наши сотрудники и помогут решить любой вопрос.
+            </p>
             <hr>
         </form>
 
@@ -64,4 +67,10 @@
             </button>
         </form>
     </div>
+    <script>
+        function toggleTextField() {
+            var textField = document.getElementById("textField");
+            textField.style.display = "block";
+        }
+    </script>
 </@t.template>
