@@ -78,5 +78,20 @@
                 Изготовители
             </a>
         </div>
+
+        <hr>
+        <h2 style="text-align: center">Работа с СТО.</h2>
+        <div style=" display: flex;
+            height: 20%;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: center;">
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 15%;margin-left: 5%"
+               data-toggle="collapse" href="/admin/stos" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                СТО
+            </a>
+
+        </div>
     </div>
 </@t.template>

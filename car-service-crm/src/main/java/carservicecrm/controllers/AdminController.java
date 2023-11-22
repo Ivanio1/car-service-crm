@@ -26,6 +26,7 @@ public class AdminController {
     private final WorkerService workerService;
     private final ManufacturerService manufacturerService;
     private final OperatorService operatorService;
+    private final StoService stoService;
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
@@ -74,11 +75,19 @@ public class AdminController {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin-employees";
     }
+
     @GetMapping("/admin/operators")
     public String adminoperators(Model model, Principal principal) {
         model.addAttribute("operators", operatorService.list());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin-operators";
+    }
+
+    @GetMapping("/admin/stos")
+    public String adminstos(Model model, Principal principal) {
+        model.addAttribute("stos", stoService.list());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-stos";
     }
 
     @PostMapping("/admin/user/ban/{id}")
@@ -136,7 +145,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/add/operator")
-    public String addoperator(@RequestParam("userId") User user, @RequestParam String workingTimeStart,@RequestParam String workingTimeEnd) {
+    public String addoperator(@RequestParam("userId") User user, @RequestParam String workingTimeStart, @RequestParam String workingTimeEnd) {
         Employee employee = employeeService.getEmployee(user.getId());
         Operator operator = new Operator();
         operator.setEmployee(employee);
@@ -146,5 +155,19 @@ public class AdminController {
         return "redirect:/admin/user/edit/" + user.getId();
     }
 
+    @PostMapping("/admin/add/sto")
+    public String addsto(@RequestParam("userId") User user, @RequestParam String name, @RequestParam String phone) {
+        Sto sto = new Sto();
+        sto.setPhone(phone);
+        sto.setName(name);
+        stoService.saveSto(sto);
+        return "redirect:/admin/stos";
+    }
+
+    @PostMapping("/delete/sto/{id}")
+    public String deleteProduct(@PathVariable Long id, Principal principal) {
+        stoService.deleteSto(id);
+        return "redirect:/admin/stos";
+    }
 
 }
