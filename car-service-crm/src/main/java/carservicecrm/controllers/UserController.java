@@ -1,10 +1,8 @@
 package carservicecrm.controllers;
 
-import carservicecrm.models.Employee;
-import carservicecrm.models.Offer;
-import carservicecrm.models.Review;
-import carservicecrm.models.User;
+import carservicecrm.models.*;
 import carservicecrm.services.OfferService;
+import carservicecrm.services.QuestionService;
 import carservicecrm.services.ReviewService;
 import carservicecrm.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +22,7 @@ public class UserController {
     private final UserService userService;
     private final ReviewService reviewService;
     private final OfferService offerService;
+    private final QuestionService questionService;
 
     @GetMapping("/login")
     public String login(Principal principal, Model model) {
@@ -91,6 +90,15 @@ public class UserController {
             return "redirect:/error";
         }
         return "redirect:/user/reviews";
+    }
+
+    @PostMapping("/user/add/question")
+    public String saveQuestion(@RequestParam("email") String email, @RequestParam String questionText) {
+        Question question = new Question();
+        question.setUser(userService.getUserByEmail(email));
+        question.setQuestionText(questionText);
+        questionService.save(question);
+        return "redirect:/profile";
     }
 
 

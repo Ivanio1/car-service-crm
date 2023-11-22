@@ -26,4 +26,6 @@ public class OperatorService {
     public List<Operator> list(){
         return operatorRepository.findAll();
     }
+
+
 }

@@ -33,7 +33,12 @@ public class User implements UserDetails {
     public boolean isAdmin() {
         return roles.contains(Role.ROLE_ADMIN);
     }
-
+    public boolean isOperator() {
+        return roles.contains(Role.ROLE_OPERATOR);
+    }
+    public boolean isUser() {
+        return roles.contains(Role.ROLE_USER);
+    }
 
     public Long getId() {
         return id;
