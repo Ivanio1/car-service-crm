@@ -34,7 +34,8 @@ public class User implements UserDetails {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH,
-                    CascadeType.PERSIST
+                    CascadeType.PERSIST,
+                    CascadeType.REMOVE
             })
     @JoinTable(name = "user_car",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -131,6 +131,7 @@ public class UserController {
     @PostMapping("/user/delete/car/{id}")
     public String deleteCar(@RequestParam("email") String email, @PathVariable Long id) {
         userService.removeCarFromUser(userService.getUserByEmail(email).getId(), carService.getCar(id));
+
         return "redirect:/user/my/cars";
     }
 

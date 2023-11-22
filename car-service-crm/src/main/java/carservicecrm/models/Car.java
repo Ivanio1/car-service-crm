@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,7 +16,7 @@ public class Car {
     private String brand;
     private String model;
     private Date creation_date;
-    @ManyToMany(mappedBy = "cars")
+    @ManyToMany(mappedBy = "cars",cascade = CascadeType.ALL)
     private Set<User> users = new HashSet<>();
 
     public Long getId() {

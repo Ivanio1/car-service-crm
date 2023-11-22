@@ -4,6 +4,7 @@ import carservicecrm.models.Car;
 import carservicecrm.models.Employee;
 import carservicecrm.models.User;
 import carservicecrm.models.enums.Role;
+import carservicecrm.repositories.CarRepository;
 import carservicecrm.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CarRepository carRepository;
 
     public boolean createUser(User user) {
         String userEmail = user.getEmail();
@@ -88,9 +90,9 @@ public class UserService {
                 .orElse(null);
         if (user != null) {
             userRepository.delete(user);
-            log.info("Employee with id = {} was deleted", id);
+            log.info("User with id = {} was deleted", id);
         } else {
-            log.error("Employee with id = {} is not found", id);
+            log.error("User with id = {} is not found", id);
         }
     }
 
@@ -112,8 +114,9 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         user.removeCar(car);
-
         userRepository.save(user);
+        carRepository.delete(car);
+
     }
 
     public Set<Car> getUserCars(Long userId) {

@@ -145,7 +145,6 @@ public class AdminController {
         operator.setWorkingTimeStart(LocalTime.parse(workingTimeStart));
         operator.setWorkingTimeEnd(LocalTime.parse(workingTimeEnd));
         employee.setOperator(operator);
-        employeeService.saveEmployee(employee);
         operatorService.saveOperator(operator);
         return "redirect:/admin/user/edit/" + user.getId();
     }
