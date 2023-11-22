@@ -1,5 +1,6 @@
 package carservicecrm.services;
 
+import carservicecrm.models.Car;
 import carservicecrm.models.Employee;
 import carservicecrm.models.User;
 import carservicecrm.models.enums.Role;
@@ -96,5 +97,28 @@ public class UserService {
     public List<User> activeUsers(){
         return userRepository.findAllActiveUsers();
     }
+
+    public void addCarToUser(Long userId, Car car) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.addCar(car);
+
+        userRepository.save(user);
+    }
+
+    public void removeCarFromUser(Long userId, Car car) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.removeCar(car);
+
+        userRepository.save(user);
+    }
+
+    public Set<Car> getUserCars(Long userId) {
+        return userRepository.getUserCars(userId);
+    }
+
 
 }

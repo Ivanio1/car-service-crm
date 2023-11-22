@@ -29,6 +29,29 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_car",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "car_id"))
+    private Set<Car> cars = new HashSet<>();
+
+    public void addCar(Car car) {
+        cars.add(car);
+        car.getUsers().add(this);
+    }
+
+    public void removeCar(Car car) {
+        cars.remove(car);
+        car.getUsers().remove(this);
+    }
+
+    public Set<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
+    }
 
     public boolean isAdmin() {
         return roles.contains(Role.ROLE_ADMIN);

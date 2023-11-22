@@ -29,12 +29,16 @@
             </a><br>
         </#if>
 
-
-        <a class="btn btn-dark mb-3" style="text-align: center; width: 100%"
-           href="/my/products">
-            Мои заказы - не сделано
-        </a>
         <#if user.isUser()>
+            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%"
+               href="/my/products">
+                Мои заказы - не сделано
+            </a>
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 100%"
+               data-toggle="collapse" href="/user/my/cars" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                Мои автомобили
+            </a>
             <form action="/user/add/review" method="post">
                 <hr>
                 <h3>Оставить отзыв</h3>

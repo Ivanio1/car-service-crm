@@ -1,10 +1,7 @@
 package carservicecrm.controllers;
 
 import carservicecrm.models.*;
-import carservicecrm.services.OfferService;
-import carservicecrm.services.QuestionService;
-import carservicecrm.services.ReviewService;
-import carservicecrm.services.UserService;
+import carservicecrm.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -15,6 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ public class UserController {
     private final ReviewService reviewService;
     private final OfferService offerService;
     private final QuestionService questionService;
+    private final CarService carService;
 
     @GetMapping("/login")
     public String login(Principal principal, Model model) {
@@ -80,7 +83,7 @@ public class UserController {
     }
 
     @PostMapping("/user/add/review")
-    public String addEmployee(@RequestParam("email") String email, @RequestParam String reviewText,@RequestParam Integer rating,@RequestParam String offer) {
+    public String addEmployee(@RequestParam("email") String email, @RequestParam String reviewText, @RequestParam Integer rating, @RequestParam String offer) {
         Review review = new Review();
         review.setUser(userService.getUserByEmail(email));
         review.setReviewText(reviewText);
@@ -99,6 +102,35 @@ public class UserController {
         question.setQuestionText(questionText);
         questionService.save(question);
         return "redirect:/profile";
+    }
+
+    @GetMapping("/user/my/cars")
+    public String usercars(Model model, Principal principal) {
+        User user = userService.getUserByPrincipal(principal);
+        model.addAttribute("cars", userService.getUserCars(user.getId()));
+        model.addAttribute("user", user);
+        return "user-cars";
+    }
+
+
+    @PostMapping("/user/add/car")
+    public String saveCar(@RequestParam("email") String email, @RequestParam String brand, @RequestParam String model, @RequestParam String creation_date) throws ParseException {
+        Car car = new Car();
+        car.setBrand(brand);
+        car.setModel(model);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = formatter.parse(creation_date);
+        car.setCreation_date(date);
+        User user = userService.getUserByEmail(email);
+        userService.addCarToUser(user.getId(), car);
+        carService.saveCar(car);
+        return "redirect:/user/my/cars";
+    }
+
+    @PostMapping("/user/delete/car/{id}")
+    public String saveCar(@RequestParam("email") String email, @PathVariable Long id) {
+        userService.removeCarFromUser(userService.getUserByEmail(email).getId(), carService.getCar(id));
+        return "redirect:/user/my/cars";
     }
 
 
