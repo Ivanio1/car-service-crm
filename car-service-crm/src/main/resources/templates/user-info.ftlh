@@ -10,6 +10,8 @@
         <h2>${user.name}</h2>
         <br>
         Номер телефона: <b>${user.phoneNumber}</b>
+        <br>
+        Электронный адрес: <b>${user.email}</b>
     </div>
     <br>
     <hr>
