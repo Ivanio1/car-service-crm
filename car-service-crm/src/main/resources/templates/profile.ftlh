@@ -47,7 +47,7 @@
             <hr>
         </form>
 
-        <form action="/user/add/question" method="post">
+        <form action="/operator/add/question" method="post">
             <h3>Появился вопрос?</h3>
             <input type="text" name="question" required placeholder="Задай его нам" style="border-radius: 7px;">
             <input type="hidden" value="${user.email}" name="email">
@@ -55,7 +55,7 @@
             <br><br>
             <button id="saveButton" type="submit" class="btn btn-dark" onclick="toggleTextField()">Отправить</button>
             <p id="textField" style="width: 100%;align-content: center;align-items: center;display: none">
-                Скоро с вами свяжутся наши сотрудники и помогут решить любой вопрос.
+                Спасибо за обращение. Скоро с вами свяжутся наши сотрудники и помогут решить любой вопрос.
             </p>
             <hr>
         </form>
