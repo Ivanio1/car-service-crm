@@ -34,38 +34,39 @@
            href="/my/products">
             Мои заказы - не сделано
         </a>
- <#if user.isUser()>
-        <form action="/user/add/review" method="post">
-            <hr>
-            <h3>Оставить отзыв</h3>
-            <label>Услуга: <select name="offer" id="offer-select">
-                    <option value="">--Выберите услугу--</option>
-                     <#list offers as offer>
-                         <option value="${offer.name}">${offer.name}</option>
-                     <#else>
-                         <h1 style="text-align: center">Ничего не найдено</h1>
-                     </#list>
-                </select></label>
+        <#if user.isUser()>
+            <form action="/user/add/review" method="post">
+                <hr>
+                <h3>Оставить отзыв</h3>
+                <label>Услуга: <select name="offer" id="offer-select">
+                        <option value="">--Выберите услугу--</option>
+                        <#list offers as offer>
+                            <option value="${offer.name}">${offer.name}</option>
+                        <#else>
+                            <h1 style="text-align: center">Ничего не найдено</h1>
+                        </#list>
+                    </select></label>
 
-            <label>Текст отзыва: <input type="text" name="reviewText" required></label>
-            <label>Рейтинг: <input type="number" name="rating" required min="1" max="5"></label>
-            <input type="hidden" value="${user.email}" name="email">
-            <input type="hidden" value="${_csrf.token}" name="_csrf">
-            <br><br>
-            <button id="saveButton" type="submit" class="btn btn-dark" >Отправить</button>
-            <hr>
-        </form>
+                <label>Текст отзыва: <input type="text" name="reviewText" required></label>
+                <label>Рейтинг: <input type="number" name="rating" required min="1" max="5"></label>
+                <input type="hidden" value="${user.email}" name="email">
+                <input type="hidden" value="${_csrf.token}" name="_csrf">
+                <br><br>
+                <button id="saveButton" type="submit" class="btn btn-dark">Отправить</button>
+                <hr>
+            </form>
 
-        <form action="/user/add/question" method="post">
-            <h3>Появился вопрос?</h3>
-            <input type="text" name="questionText" required placeholder="Задай его нам" style="border-radius: 7px;">
-            <input type="hidden" value="${user.email}" name="email">
-            <input type="hidden" value="${_csrf.token}" name="_csrf">
-            <br><br>
-            <button id="saveButton" type="submit" class="btn btn-dark" onclick="toggleTextField()">Отправить</button>
-            <hr>
-        </form>
- </#if>
+            <form action="/user/add/question" method="post" id="application">
+                <h3>Появился вопрос?</h3>
+                <input type="text" name="questionText" required placeholder="Задай его нам" style="border-radius: 7px;">
+                <input type="hidden" value="${user.email}" name="email">
+                <input type="hidden" value="${_csrf.token}" name="_csrf">
+                <br><br>
+                <button id="saveButton" type="submit" class="btn btn-dark" onclick="toggleTextField()">Отправить
+                </button>
+                <hr>
+            </form>
+        </#if>
         <form action="/logout" method="post">
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <button type="submit" style="text-align: center; width: 100%" class="btn btn-danger mb-2">
@@ -74,8 +75,27 @@
         </form>
     </div>
     <script>
+        var form = document.getElementById('application');
         function toggleTextField() {
-            alert("Спасибо за обращение. Скоро с вами свяжутся наши сотрудники и помогут решить любой вопрос.")
+            form.onsubmit = function (e) {
+                e.preventDefault();
+                doSomeAnimationHere();
+            }
         }
+
+        function doSomeAnimationHere() {
+            Swal.fire({
+                title: "Спасибо за обращение!",
+                text: "Скоро с вами свяжутся наши сотрудники и помогут решить любой вопрос!",
+                icon: "success",
+                timer:3000,
+                showCancelButton: false,
+                showConfirmButton: false
+            }).then(function() {
+                form.submit();
+            });
+
+        }
+
     </script>
 </@t.template>
