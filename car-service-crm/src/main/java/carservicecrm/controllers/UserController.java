@@ -85,7 +85,8 @@ public class UserController {
     @PostMapping("/user/add/review")
     public String addEmployee(@RequestParam("email") String email, @RequestParam String reviewText, @RequestParam Integer rating, @RequestParam String offer) {
         Review review = new Review();
-        review.setUser(userService.getUserByEmail(email));
+        User user = userService.getUserByEmail(email);
+        review.setUser(user);
         review.setReviewText(reviewText);
         review.setRating(rating);
         review.setOffer(offerService.getOfferByName(offer));
@@ -128,7 +129,7 @@ public class UserController {
     }
 
     @PostMapping("/user/delete/car/{id}")
-    public String saveCar(@RequestParam("email") String email, @PathVariable Long id) {
+    public String deleteCar(@RequestParam("email") String email, @PathVariable Long id) {
         userService.removeCarFromUser(userService.getUserByEmail(email).getId(), carService.getCar(id));
         return "redirect:/user/my/cars";
     }

@@ -11,7 +11,8 @@ public class Operator {
     private Long id;
     private LocalTime workingTimeStart;
     private LocalTime workingTimeEnd;
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Employee employee;
 
     public Long getId() {

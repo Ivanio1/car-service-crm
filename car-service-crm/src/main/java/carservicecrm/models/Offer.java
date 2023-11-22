@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "offer")
@@ -20,7 +21,6 @@ public class Offer {
             mappedBy = "offer")
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
-
 
     public Long getPreviewImageId() {
         return previewImageId;

@@ -30,6 +30,11 @@ public class EmployeeService {
        return employeeRepository.findByUserId(user_id);
     }
 
+    public Employee getEmployeeById(Long id){
+        return employeeRepository.findEmployeeById(id);
+    }
+
+
     public List<Employee> list() {
         return employeeRepository.findAll();
     }

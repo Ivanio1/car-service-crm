@@ -1,14 +1,14 @@
 package carservicecrm.services;
 
 
-import carservicecrm.models.Sto;
-import carservicecrm.models.User;
+import carservicecrm.models.*;
 import carservicecrm.repositories.StoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -39,4 +39,32 @@ public class StoService {
             log.error("STO with id = {} is not found", id);
         }
     }
+
+
+    public void addEmployeeToSto(Long stoId, Employee employee) {
+        Sto sto = stoRepository.findById(stoId)
+                .orElseThrow(() -> new RuntimeException("Sto not found"));
+        sto.addEmployee(employee);
+        stoRepository.save(sto);
+    }
+
+    public void removeEmployeeFromSto(Long stoId, Employee employee) {
+        Sto sto = stoRepository.findById(stoId)
+                .orElseThrow(() -> new RuntimeException("Sto not found"));
+        sto.removeEmployee(employee);
+        stoRepository.save(sto);
+    }
+
+    public Set<Employee> getStoEmployees(Long stoId) {
+        return stoRepository.getStoEmployees(stoId);
+    }
+
+    public Sto getSto(Long stoId) {
+        return stoRepository.findStoById(stoId);
+    }
+    public Sto getStoByName(String name) {
+        return stoRepository.findByName(name);
+    }
+
+
 }

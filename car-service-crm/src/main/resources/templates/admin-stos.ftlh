@@ -7,6 +7,7 @@
         <thead><tr>
             <th scope="col">Название</th>
             <th scope="col">Номер телефона</th>
+             <th scope="col">Работники СТО</th>
             <th scope="col">Удалить СТО</th>
         </tr>
         </thead>
@@ -15,6 +16,14 @@
             <tr>
                 <td>${sto.name}</td>
                 <td>${sto.phone}</td>
+                <td>
+                                                    <form action="/admin/sto/employees/${sto.id}" method="post">
+                                                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                                                        <button type="submit" class="btn btn-light m-3">
+                                                            Посмотреть
+                                                        </button>
+                                                    </form>
+                                                </td>
                 <td>
                                     <form action="/delete/sto/${sto.id}" method="post">
                                         <input type="hidden" name="_csrf" value="${_csrf.token}"/>

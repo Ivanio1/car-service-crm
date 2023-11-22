@@ -1,10 +1,13 @@
 <#import "blocks/template.ftlh" as t>
 <@t.template user1>
-    <h1 style="text-align: center">Изменить пользователя - ${user.name}</h1><hr>
+    <h1 style="text-align: center">Изменить пользователя - ${user.name}</h1>
+    <hr>
     <form action="/admin/user/edit" method="post">
         <#list roles as role>
             <div>
-                <label><input type="checkbox" name="${role}" onclick="toggleTextField()"  ${user.roles?seq_contains(role)?string("checked", "")}>${role}</label>
+                <label><input type="checkbox" name="${role}"
+                              onclick="toggleTextField()" ${user.roles?seq_contains(role)?string("checked", "")}>${role}
+                </label>
             </div>
         </#list>
         <input type="hidden" value="${user.id}" name="userId">
@@ -13,11 +16,19 @@
         <br> <br>
     </form>
 
-    <form action="/admin/add/employee" method="post">
+    <form action="/admin/add/employee/sto" method="post">
         <hr>
         <div id="snilsField" style="display: none;">
             <p>Сначала сохраните роль пользователя!</p>
             <label>СНИЛС: <input type="text" name="snils" pattern="^\d{3}-\d{3}-\d{3} \d{2}$" required></label>
+            <label>СТО: <select name="sto" id="offer-select">
+                    <option value="">--Выберите СТО--</option>
+                    <#list stos as sto>
+                        <option value="${sto.name}">${sto.name}</option>
+                    <#else>
+                        <h1 style="text-align: center">Ничего не найдено</h1>
+                    </#list>
+                </select></label>
         </div>
         <br>
         <input type="hidden" value="${user.id}" name="userId">
@@ -30,6 +41,7 @@
             <hr>
             <p>Сначала сохраните роль пользователя и его СНИЛС при роли EMPLOYEE!</p>
             <label>Специализация рабочего: <input type="text" name="specialization" required></label>
+
         </div>
         <input type="hidden" value="${user.id}" name="userId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
@@ -59,10 +71,12 @@
         <br>
         <input type="hidden" value="${user.id}" name="userId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
-        <button id="saveButton2" type="submit" class="btn btn-dark" style="display: none;">Сохранить изготовителя</button>
+        <button id="saveButton2" type="submit" class="btn btn-dark" style="display: none;">Сохранить изготовителя
+        </button>
     </form>
     <script>
         window.addEventListener("load", toggleTextField);
+
         function toggleTextField() {
             var checkbox = document.querySelector('input[name="ROLE_EMPLOYEE"]');
             var textField = document.getElementById("snilsField");

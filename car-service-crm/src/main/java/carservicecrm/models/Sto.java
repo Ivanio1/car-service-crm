@@ -2,6 +2,9 @@ package carservicecrm.models;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "sto")
 public class Sto {
@@ -11,6 +14,37 @@ public class Sto {
     @Column(unique = true, updatable = false)
     private String name;
     private String phone;
+
+    @ManyToMany(cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
+    @JoinTable(name = "employee_sto",
+            joinColumns = @JoinColumn(name = "sto_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id"))
+    private Set<Employee> employees = new HashSet<>();
+
+
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
+        employee.getStoes().add(this);
+    }
+
+    public void removeEmployee(Employee employee) {
+        employees.remove(employee);
+        employee.getStoes().remove(this);
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
+    }
 
     public Long getId() {
         return id;

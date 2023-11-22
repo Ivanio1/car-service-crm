@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.Map;
 
 @Controller
@@ -101,6 +104,7 @@ public class AdminController {
         model.addAttribute("user", user);
         model.addAttribute("user1", userService.getUserByPrincipal(principal));
         model.addAttribute("roles", Role.values());
+        model.addAttribute("stos",stoService.list());
         return "user-edit";
     }
 
@@ -110,25 +114,13 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    @PostMapping("/admin/add/employee")
-    public String addEmployee(@RequestParam("userId") User user, @RequestParam String snils) {
-        Employee employee = new Employee();
-        employee.setName(user.getName());
-        employee.setSnils(snils);
-        employee.setSurname(user.getSurname());
-        employee.setUser(user);
-        if (!employeeService.saveEmployee(employee)) {
-            return "redirect:/error";
-        }
-        return "redirect:/admin/user/edit/" + user.getId();
-    }
-
     @PostMapping("/admin/add/worker")
     public String addWorker(@RequestParam("userId") User user, @RequestParam String specialization) {
         Employee employee = employeeService.getEmployee(user.getId());
         Worker worker = new Worker();
         worker.setEmployee(employee);
         worker.setSpecialization(specialization);
+        employee.setWorker(worker);
         workerService.saveWorker(worker);
         return "redirect:/admin/user/edit/" + user.getId();
     }
@@ -140,6 +132,7 @@ public class AdminController {
         Manufacturer manufacturer = new Manufacturer();
         manufacturer.setEmployee(employee);
         manufacturer.setDetail_specialization(detail_specialization);
+        employee.setManufacturer(manufacturer);
         manufacturerService.saveManufacturer(manufacturer);
         return "redirect:/admin/user/edit/" + user.getId();
     }
@@ -151,6 +144,8 @@ public class AdminController {
         operator.setEmployee(employee);
         operator.setWorkingTimeStart(LocalTime.parse(workingTimeStart));
         operator.setWorkingTimeEnd(LocalTime.parse(workingTimeEnd));
+        employee.setOperator(operator);
+        employeeService.saveEmployee(employee);
         operatorService.saveOperator(operator);
         return "redirect:/admin/user/edit/" + user.getId();
     }
@@ -167,6 +162,35 @@ public class AdminController {
     @PostMapping("/delete/sto/{id}")
     public String deleteProduct(@PathVariable Long id, Principal principal) {
         stoService.deleteSto(id);
+        return "redirect:/admin/stos";
+    }
+
+    @PostMapping ("/admin/sto/employees/{id}")
+    public String stoemployees(Model model, Principal principal,@PathVariable Long id) {
+        User user = userService.getUserByPrincipal(principal);
+        model.addAttribute("employees", stoService.getStoEmployees(id));
+        model.addAttribute("user", user);
+        model.addAttribute("sto", stoService.getSto(id));
+        return "sto-employees";
+    }
+
+    @PostMapping("/admin/add/employee/sto")
+    public String addEmployee(@RequestParam("userId") User user, @RequestParam String snils,@RequestParam String sto) {
+        Employee employee = new Employee();
+        employee.setName(user.getName());
+        employee.setSnils(snils);
+        employee.setSurname(user.getSurname());
+        employee.setUser(user);
+        userService.getUserByEmail(user.getEmail()).setEmployee(employee);
+        Sto sto1 = stoService.getStoByName(sto);
+        stoService.addEmployeeToSto(sto1.getId(), employee);
+        employeeService.saveEmployee(employee);
+        return "redirect:/admin/user/edit/" + user.getId();
+    }
+
+    @PostMapping("/admin/sto/{stoid}/delete/employee/{id}")
+    public String deleteEmployeeFromSto(@RequestParam("email") String email, @PathVariable Long id, @PathVariable Long stoid) {
+        stoService.removeEmployeeFromSto(stoid,employeeService.getEmployeeById(id));
         return "redirect:/admin/stos";
     }
 
