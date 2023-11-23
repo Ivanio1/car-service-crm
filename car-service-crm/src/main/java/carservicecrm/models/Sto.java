@@ -15,16 +15,7 @@ public class Sto {
     private String name;
     private String phone;
 
-    @ManyToMany(cascade =
-            {
-                    CascadeType.DETACH,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH,
-                    CascadeType.PERSIST
-            })
-    @JoinTable(name = "employee_sto",
-            joinColumns = @JoinColumn(name = "sto_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id"))
+    @ManyToMany(mappedBy = "stoes")
     private Set<Employee> employees = new HashSet<>();
 
 
