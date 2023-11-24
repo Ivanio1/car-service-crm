@@ -22,6 +22,18 @@ public class Offer {
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<Review> reviews;
+
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
     public Long getPreviewImageId() {
         return previewImageId;
     }

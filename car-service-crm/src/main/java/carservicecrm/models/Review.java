@@ -1,6 +1,8 @@
 package carservicecrm.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "review")
@@ -10,9 +12,12 @@ public class Review {
     private Long id;
     private String reviewText;
     private Integer rating;
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Offer offer;
 
     public Long getId() {
