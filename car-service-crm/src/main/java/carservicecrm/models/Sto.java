@@ -1,6 +1,8 @@
 package carservicecrm.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +18,7 @@ public class Sto {
     private String phone;
 
     @ManyToMany(mappedBy = "stoes")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Employee> employees = new HashSet<>();
 
 

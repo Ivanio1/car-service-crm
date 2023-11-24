@@ -27,7 +27,7 @@ public class Employee {
     private Manufacturer manufacturer;
 
 
-    @ManyToMany(cascade =
+    @ManyToMany( cascade =
             {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
