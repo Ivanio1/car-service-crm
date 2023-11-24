@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -104,7 +107,7 @@ public class AdminController {
         model.addAttribute("user", user);
         model.addAttribute("user1", userService.getUserByPrincipal(principal));
         model.addAttribute("roles", Role.values());
-        model.addAttribute("stos",stoService.list());
+        model.addAttribute("stos", stoService.list());
         return "user-edit";
     }
 
@@ -164,8 +167,8 @@ public class AdminController {
         return "redirect:/admin/stos";
     }
 
-    @PostMapping ("/admin/sto/employees/{id}")
-    public String stoemployees(Model model, Principal principal,@PathVariable Long id) {
+    @PostMapping("/admin/sto/employees/{id}")
+    public String stoemployees(Model model, Principal principal, @PathVariable Long id) {
         User user = userService.getUserByPrincipal(principal);
         model.addAttribute("employees", stoService.getStoEmployees(id));
         model.addAttribute("user", user);
@@ -174,22 +177,28 @@ public class AdminController {
     }
 
     @PostMapping("/admin/add/employee/sto")
-    public String addEmployee(@RequestParam("userId") User user, @RequestParam String snils,@RequestParam String sto) {
+    public String addEmployee(@RequestParam("userId") User user, @RequestParam String snils, @RequestParam MultiValueMap<String, String> form) {
         Employee employee = new Employee();
         employee.setName(user.getName());
         employee.setSnils(snils);
         employee.setSurname(user.getSurname());
         employee.setUser(user);
         userService.getUserByEmail(user.getEmail()).setEmployee(employee);
-        Sto sto1 = stoService.getStoByName(sto);
-        stoService.addEmployeeToSto(sto1.getId(), employee);
-        employeeService.saveEmployee(employee);
+
+        for (String key : form.keySet()) {
+            if (!(Objects.equals(key, "snils") || Objects.equals(key, "userId") || Objects.equals(key, "_csrf"))) {
+                Sto sto1 = stoService.getStoByName(key);
+                stoService.addEmployeeToSto(sto1.getId(), employee);
+                employeeService.saveEmployee(employee);
+            }
+        }
+
         return "redirect:/admin/user/edit/" + user.getId();
     }
 
     @PostMapping("/admin/sto/{stoid}/delete/employee/{id}")
     public String deleteEmployeeFromSto(@RequestParam("email") String email, @PathVariable Long id, @PathVariable Long stoid) {
-        stoService.removeEmployeeFromSto(stoid,employeeService.getEmployeeById(id));
+        stoService.removeEmployeeFromSto(stoid, employeeService.getEmployeeById(id));
         return "redirect:/admin/stos";
     }
 

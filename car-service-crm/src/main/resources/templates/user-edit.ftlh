@@ -21,14 +21,16 @@
         <div id="snilsField" style="display: none;">
             <p>Сначала сохраните роль пользователя!</p>
             <label>СНИЛС: <input type="text" name="snils" pattern="^\d{3}-\d{3}-\d{3} \d{2}$" required></label>
-            <label>СТО: <select name="sto" id="offer-select">
-                    <option value="">--Выберите СТО--</option>
+            <label>Выберите СТО:
+                <div style="overflow-y: scroll;height: 100px">
                     <#list stos as sto>
-                        <option value="${sto.name}">${sto.name}</option>
-                    <#else>
-                        <h1 style="text-align: center">Ничего не найдено</h1>
+                        <div>
+                            <label><input type="checkbox" name="${sto.name}">${sto.name}
+                            </label>
+                        </div>
                     </#list>
-                </select></label>
+                </div>
+            </label>
         </div>
         <br>
         <input type="hidden" value="${user.id}" name="userId">
