@@ -16,7 +16,7 @@ public class ReviewService {
 
 
     public List<Review> list() {
-        return reviewRepository.findAll();
+        return reviewRepository.findAllReviews();
     }
 
     public boolean saveReview(Review review) {

@@ -17,7 +17,7 @@ public class CarService {
     private final CarRepository carRepository;
 
     public List<Car> list() {
-        return carRepository.findAll();
+        return carRepository.findAllCars();
     }
 
     public boolean saveCar(Car car) {
