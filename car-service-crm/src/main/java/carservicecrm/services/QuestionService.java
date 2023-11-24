@@ -15,24 +15,23 @@ import java.util.List;
 public class QuestionService {
     private final QuestionRepository questionRepository;
 
-    public boolean save(Question question){
-        try{
+    public boolean save(Question question) {
+        try {
             questionRepository.save(question);
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
     }
 
     public List<Question> list() {
-        return questionRepository.findAll();
+        return questionRepository.findAllQuestions();
     }
 
     public void deleteQuestion(Long id) {
-        Question question = questionRepository.findById(id)
-                .orElse(null);
+        Question question = questionRepository.findQuestionById(id);
         if (question != null) {
-            questionRepository.delete(question);
+            questionRepository.deleteQuestionById(question.getId());
             log.info("Question with id = {} was deleted", id);
         } else {
             log.error("Question with id = {} is not found", id);
