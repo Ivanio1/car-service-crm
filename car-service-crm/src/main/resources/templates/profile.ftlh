@@ -29,6 +29,13 @@
             </a><br>
         </#if>
 
+        <#if user.isWorker()>
+            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%"
+               href="/worker/panel">
+                Панель оператора
+            </a><br>
+        </#if>
+
         <#if user.isUser()>
             <a class="btn btn-dark mb-3" style="text-align: center; width: 100%"
                href="/my/products">

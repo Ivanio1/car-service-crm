@@ -102,6 +102,10 @@ public class User implements UserDetails {
     public boolean isUser() {
         return roles.contains(Role.ROLE_USER);
     }
+    public boolean isWorker() {
+        return roles.contains(Role.ROLE_WORKER);
+    }
+
 
     public Long getId() {
         return id;
