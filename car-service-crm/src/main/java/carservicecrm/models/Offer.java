@@ -2,8 +2,11 @@ package carservicecrm.models;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,9 +25,25 @@ public class Offer {
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private Set<Review> reviews;
 
+    @ManyToMany(mappedBy = "offers")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Review> reviews = new HashSet<>();
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        review.getOffers().add(this);
+    }
+
+    public void removeReview(Review review) {
+        try{
+            reviews.remove(review);
+            review.getOffers().remove(this);
+        }catch (Exception ignored){
+
+        }
+
+    }
 
     public Set<Review> getReviews() {
         return reviews;

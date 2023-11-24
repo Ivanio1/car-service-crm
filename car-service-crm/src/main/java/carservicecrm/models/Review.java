@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "review")
 public class Review {
@@ -12,13 +15,24 @@ public class Review {
     private Long id;
     private String reviewText;
     private Integer rating;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+
+    @ManyToOne(cascade =
+            {
+                    CascadeType.REMOVE
+            },fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Offer offer;
+    @ManyToMany(cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
+    @JoinTable(name = "review_offer",
+            joinColumns = @JoinColumn(name = "review_id"),
+            inverseJoinColumns = @JoinColumn(name = "offer_id"))
+    private Set<Offer> offers = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -52,11 +66,11 @@ public class Review {
         this.user = user;
     }
 
-    public Offer getOffer() {
-        return offer;
+    public Set<Offer> getOffers() {
+        return offers;
     }
 
-    public void setOffer(Offer offer) {
-        this.offer = offer;
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
     }
 }

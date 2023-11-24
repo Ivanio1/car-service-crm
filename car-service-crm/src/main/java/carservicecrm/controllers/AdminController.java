@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -33,6 +30,9 @@ public class AdminController {
     private final ManufacturerService manufacturerService;
     private final OperatorService operatorService;
     private final StoService stoService;
+    private final OfferService offerService;
+    private final ReviewService reviewService;
+
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
@@ -202,4 +202,12 @@ public class AdminController {
         return "redirect:/admin/stos";
     }
 
+
+    @PostMapping("/admin/delete/review/{id}")
+    public String deleteReview(@RequestParam List<String> offers, @PathVariable Long id) {
+        for (String offer : offers) {
+            offerService.removeReviewFromOffer(offerService.getOfferByName(offer).getId(), reviewService.getReview(id));
+        }
+        return "redirect:/user/reviews";
+    }
 }

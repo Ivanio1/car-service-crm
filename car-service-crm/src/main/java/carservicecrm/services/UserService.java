@@ -84,12 +84,15 @@ public class UserService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+    public User getUserById(Long id) {
+        return userRepository.findUserById(id);
+    }
 
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElse(null);
         if (user != null) {
-            userRepository.delete(user);
+            userRepository.deleteById(user.getId());
             log.info("User with id = {} was deleted", id);
         } else {
             log.error("User with id = {} is not found", id);

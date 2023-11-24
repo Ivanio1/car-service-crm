@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -71,7 +71,15 @@ public class UserController {
     @PostMapping("/delete/user/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteProduct(@PathVariable Long id, Principal principal) {
+        for (Review review: userService.getUserById(id).getReviews()) {
+            for (Offer offer : offerService.listOffers("")) {
+                offerService.removeReviewFromOffer(offer.getId(), review);
+            }
+            //reviewService.deleteReview(review.getId());
+        }
         userService.deleteUser(id);
+        userService.deleteUser(id);
+
         return "redirect:/admin";
     }
 
@@ -83,18 +91,24 @@ public class UserController {
     }
 
     @PostMapping("/user/add/review")
-    public String addEmployee(@RequestParam("email") String email, @RequestParam String reviewText, @RequestParam Integer rating, @RequestParam String offer) {
+    public String addReview(@RequestParam("email") String email, @RequestParam String reviewText, @RequestParam Integer rating, @RequestParam MultiValueMap<String, String> form) {
         Review review = new Review();
         User user = userService.getUserByEmail(email);
         review.setUser(user);
         review.setReviewText(reviewText);
         review.setRating(rating);
-        review.setOffer(offerService.getOfferByName(offer));
-        if (!reviewService.saveReview(review)) {
-            return "redirect:/error";
+        for (String key : form.keySet()) {
+            if (!(Objects.equals(key, "reviewText")|| Objects.equals(key, "rating") || Objects.equals(key, "email") || Objects.equals(key, "_csrf"))) {
+                Offer offer1 = offerService.getOfferByName(key);
+                offerService.addReviewToOffer(offer1.getId(), review);
+                reviewService.saveReview(review);
+            }
         }
+
+
         return "redirect:/user/reviews";
     }
+
 
     @PostMapping("/user/add/question")
     public String saveQuestion(@RequestParam("email") String email, @RequestParam String questionText) {

@@ -49,14 +49,19 @@
             <form action="/user/add/review" method="post">
                 <hr>
                 <h3>Оставить отзыв</h3>
-                <label>Услуга: <select name="offer" id="offer-select">
-                        <option value="">--Выберите услугу--</option>
+
+                <label>Услуга:
+                    <div style="overflow-y: scroll;height: 40px">
                         <#list offers as offer>
-                            <option value="${offer.name}">${offer.name}</option>
+                            <div>
+                                <label><input type="checkbox" name="${offer.name}">${offer.name}
+                                </label>
+                            </div>
                         <#else>
                             <h1 style="text-align: center">Ничего не найдено</h1>
                         </#list>
-                    </select></label>
+                    </div>
+                </label>
 
                 <label>Текст отзыва: <input type="text" name="reviewText" required></label>
                 <label>Рейтинг: <input type="number" name="rating" required min="1" max="5"></label>

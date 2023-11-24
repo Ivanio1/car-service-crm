@@ -3,8 +3,10 @@ package carservicecrm.services;
 
 import carservicecrm.models.Image;
 import carservicecrm.models.Offer;
+import carservicecrm.models.Review;
 import carservicecrm.models.User;
 import carservicecrm.repositories.OfferRepository;
+import carservicecrm.repositories.ReviewRepository;
 import carservicecrm.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ public class OfferService {
 
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;
+    private final ReviewRepository reviewRepository;
 
     public List<Offer> listOffers(String name) {
         if (name != null && !name.equals("")) return offerRepository.findAllByName(name);
@@ -84,6 +87,29 @@ public class OfferService {
         } else {
             log.error("Offer with id = {} is not found", id);
         }
+    }
+
+
+    public void addReviewToOffer(Long userId, Review review) {
+        Offer offer = offerRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        offer.addReview(review);
+        offerRepository.save(offer);
+    }
+
+    public void removeReviewFromOffer(Long userId, Review review) {
+        try{
+            Offer offer = offerRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            offer.removeReview(review);
+            offerRepository.save(offer);
+            reviewRepository.deleteReviewById(review.getId());
+        }catch (Exception ignored){
+
+        }
+
     }
 
 }
