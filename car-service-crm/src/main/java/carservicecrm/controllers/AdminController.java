@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.security.Provider;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,8 @@ public class AdminController {
     private final StoService stoService;
     private final OfferService offerService;
     private final ReviewService reviewService;
+    private final DetailService detailService;
+    private final DetailProviderService detailProviderService;
 
 
     @GetMapping("/admin")
@@ -94,6 +97,13 @@ public class AdminController {
         model.addAttribute("stos", stoService.list());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin-stos";
+    }
+
+    @GetMapping("/admin/detailproviders")
+    public String admindetailproviders(Model model, Principal principal) {
+        model.addAttribute("providers", detailProviderService.list());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-detailproviders";
     }
 
     @PostMapping("/admin/user/ban/{id}")
@@ -161,10 +171,26 @@ public class AdminController {
         return "redirect:/admin/stos";
     }
 
+    @PostMapping("/admin/add/provider")
+    public String addProvider(@RequestParam("userId") User user, @RequestParam String name, @RequestParam String contact) {
+        DetailProvider provider = new DetailProvider();
+        provider.setContact(contact);
+        provider.setName(name);
+        detailProviderService.saveProvider(provider);
+        return "redirect:/admin/detailproviders";
+    }
+
+
     @PostMapping("/delete/sto/{id}")
     public String deleteProduct(@PathVariable Long id, Principal principal) {
         stoService.deleteSto(id);
         return "redirect:/admin/stos";
+    }
+
+    @PostMapping("/delete/provider/{id}")
+    public String deleteProvider(@PathVariable Long id, Principal principal) {
+        detailProviderService.deleteProvider(id);
+        return "redirect:/admin/detailproviders";
     }
 
     @PostMapping("/admin/sto/employees/{id}")
@@ -174,6 +200,16 @@ public class AdminController {
         model.addAttribute("user", user);
         model.addAttribute("sto", stoService.getSto(id));
         return "sto-employees";
+    }
+
+
+    @PostMapping("/admin/provider/details/{id}")
+    public String providerdetails(Model model, Principal principal, @PathVariable Long id) {
+        User user = userService.getUserByPrincipal(principal);
+        model.addAttribute("details", detailProviderService.getProviderDetails(id));
+        model.addAttribute("user", user);
+        model.addAttribute("provider", detailProviderService.getProvider(id));
+        return "provider-details";
     }
 
     @PostMapping("/admin/add/employee/sto")
@@ -200,6 +236,12 @@ public class AdminController {
     public String deleteEmployeeFromSto(@RequestParam("email") String email, @PathVariable Long id, @PathVariable Long stoid) {
         stoService.removeEmployeeFromSto(stoid, employeeService.getEmployeeById(id));
         return "redirect:/admin/stos";
+    }
+
+    @PostMapping("/admin/provider/{providerid}/delete/detail/{id}")
+    public String deleteDetailFromProvider(@RequestParam("email") String email, @PathVariable Long id, @PathVariable Long providerid) {
+        detailProviderService.removeDetailFromProvider(providerid, detailService.getDetailById(id));
+        return "redirect:/admin/detailproviders";
     }
 
 

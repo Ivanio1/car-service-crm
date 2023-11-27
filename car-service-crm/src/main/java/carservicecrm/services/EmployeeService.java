@@ -1,8 +1,6 @@
 package carservicecrm.services;
 
 import carservicecrm.models.Employee;
-import carservicecrm.models.Manufacturer;
-import carservicecrm.models.Offer;
 import carservicecrm.repositories.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

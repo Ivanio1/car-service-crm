@@ -22,6 +22,25 @@
             </a>
         </div>
         <hr>
+        <h2 style="text-align: center">Заказ и учет деталей</h2>
+        <div style=" display: flex;
+            height: 20%;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: center;">
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%"
+               data-toggle="collapse" href="admin/add/detail" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                Добавить деталь
+            </a>
+            &nbsp &nbsp &nbsp
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%"
+               data-toggle="collapse" href="/admin/detailproviders" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                Поставщики деталей
+            </a>
+        </div>
+        <hr>
         <h2 style="text-align: center">Просмотр и изменение всех пользователей.</h2>
         <div style=" display: flex;
             height: 20%;
