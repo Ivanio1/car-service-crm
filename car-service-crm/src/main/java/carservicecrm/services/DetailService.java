@@ -1,9 +1,7 @@
 package carservicecrm.services;
 
 import carservicecrm.models.Detail;
-import carservicecrm.models.Employee;
 import carservicecrm.repositories.DetailRepository;
-import carservicecrm.repositories.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,8 +29,19 @@ public class DetailService {
         return detailRepository.findDetailById(id);
     }
 
+    public Detail getDetailByName(String name) {
+        return detailRepository.findByName(name);
+    }
 
     public List<Detail> list() {
         return detailRepository.findAll();
+    }
+
+    public List<Detail> listStorage() {
+        return detailRepository.findAllInStorage();
+    }
+
+    public void updateStorageStock(Long id, Integer number){
+        detailRepository.updateStorageStock(id,number);
     }
 }

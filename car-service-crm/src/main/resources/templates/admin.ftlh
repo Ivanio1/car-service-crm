@@ -29,15 +29,15 @@
             align-items: center;
             justify-content: center;">
             <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%"
-               data-toggle="collapse" href="admin/add/detail" role="button"
+               data-toggle="collapse" href="/admin/details" role="button"
                aria-expanded="true" aria-controls="collapseExample">
-                Добавить деталь
+                Детали на складе
             </a>
             &nbsp &nbsp &nbsp
             <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%"
                data-toggle="collapse" href="/admin/detailproviders" role="button"
                aria-expanded="true" aria-controls="collapseExample">
-                Поставщики деталей
+                Поставщики
             </a>
         </div>
         <hr>

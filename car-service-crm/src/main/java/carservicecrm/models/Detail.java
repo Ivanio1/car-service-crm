@@ -1,12 +1,13 @@
 package carservicecrm.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "detailprovider")
+@Table(name = "detail")
 public class Detail {
 
     @Id
@@ -14,6 +15,9 @@ public class Detail {
     private Long id;
     private String name;
     private Integer stock;
+
+    @ColumnDefault("0")
+    private Integer storagestock;
     private Integer price;
 
     @ManyToMany(cascade =
@@ -27,6 +31,14 @@ public class Detail {
             joinColumns = @JoinColumn(name = "detail_id"),
             inverseJoinColumns = @JoinColumn(name = "detailprovider_id"))
     private Set<DetailProvider> providers = new HashSet<>();
+
+    public Integer getStoragestock() {
+        return storagestock;
+    }
+
+    public void setStoragestock(Integer storagestock) {
+        this.storagestock = storagestock;
+    }
 
     public Long getId() {
         return id;

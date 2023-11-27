@@ -52,5 +52,27 @@
         <button id="saveButton3" type="submit" class="btn btn-dark">Сохранить поставщика</button>
     </form>
     <hr>
-    <h2>Добавить деталь</h2>
+    <h2>Добавить деталь, доступную к покупке</h2>
+    <form action="/admin/add/detail/provider" method="post">
+        <hr>
+        <div>
+            <label>Введите название: <input type="text" name="name" required></label>
+            <label>Введите количество: <input type="number" name="stock" required></label>
+            <label>Введите цену: <input type="number" name="price" required></label>
+            <label>Выберите поставщика детали:
+                <div style="overflow-y: scroll;height: 100px">
+                    <#list providers as provider>
+                        <div>
+                            <label><input type="checkbox" name="${provider.name}">${provider.name}
+                            </label>
+                        </div>
+                    </#list>
+                </div>
+            </label>
+        </div>
+        <br>
+        <input type="hidden" value="${user.id}" name="userId">
+        <input type="hidden" value="${_csrf.token}" name="_csrf">
+        <button id="saveButton" type="submit" class="btn btn-dark" >Сохранить деталь</button>
+    </form>
 </@t.template>

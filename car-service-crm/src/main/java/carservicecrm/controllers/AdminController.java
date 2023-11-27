@@ -202,7 +202,6 @@ public class AdminController {
         return "sto-employees";
     }
 
-
     @PostMapping("/admin/provider/details/{id}")
     public String providerdetails(Model model, Principal principal, @PathVariable Long id) {
         User user = userService.getUserByPrincipal(principal);
@@ -211,6 +210,59 @@ public class AdminController {
         model.addAttribute("provider", detailProviderService.getProvider(id));
         return "provider-details";
     }
+
+    @PostMapping("/admin/add/detail/provider")
+    public String addDetail(@RequestParam("userId") User user, @RequestParam String name, @RequestParam Integer stock, @RequestParam Integer price, @RequestParam MultiValueMap<String, String> form) {
+        Detail detail = new Detail();
+        detail.setName(name);
+        detail.setPrice(price);
+        detail.setStock(stock);
+        for (String key : form.keySet()) {
+            if (!(Objects.equals(key, "name") || Objects.equals(key, "stock") || Objects.equals(key, "price") || Objects.equals(key, "userId") || Objects.equals(key, "_csrf"))) {
+                DetailProvider provider = detailProviderService.getProviderByName(key);
+                detailProviderService.addDetailToProvider(provider.getId(), detail);
+                detailService.saveDetail(detail);
+            }
+        }
+        return "redirect:/admin/detailproviders";
+    }
+
+    @PostMapping("/admin/sto/{stoid}/delete/employee/{id}")
+    public String deleteEmployeeFromSto(@RequestParam("email") String email, @PathVariable Long id, @PathVariable Long stoid) {
+        stoService.removeEmployeeFromSto(stoid, employeeService.getEmployeeById(id));
+        return "redirect:/admin/stos";
+    }
+
+    @PostMapping("/admin/provider/{providerid}/delete/detail/{id}")
+    public String deleteDetailFromProvider(@RequestParam("email") String email, @PathVariable Long id, @PathVariable Long providerid) {
+        detailProviderService.removeDetailFromProvider(providerid, detailService.getDetailById(id));
+        return "redirect:/admin/detailproviders";
+    }
+
+    @PostMapping("/admin/buy/detail/from/{id}")
+    public String buyDetailFromProvider(@RequestParam("email") String email, @PathVariable Long id, @RequestParam String detail, @RequestParam Integer storagestock) {
+        Detail detail1 = detailService.getDetailByName(detail);
+        Integer tmp = detail1.getStock();
+        detailService.updateStorageStock(detail1.getId(),storagestock);
+        return "redirect:/admin/details";
+    }
+
+    @GetMapping("/admin/details")
+    public String admindetails(Model model, Principal principal) {
+        model.addAttribute("details", detailService.listStorage());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-details";
+    }
+
+
+    @PostMapping("/admin/delete/review/{id}")
+    public String deleteReview(@RequestParam List<String> offers, @PathVariable Long id) {
+        for (String offer : offers) {
+            offerService.removeReviewFromOffer(offerService.getOfferByName(offer).getId(), reviewService.getReview(id));
+        }
+        return "redirect:/user/reviews";
+    }
+
 
     @PostMapping("/admin/add/employee/sto")
     public String addEmployee(@RequestParam("userId") User user, @RequestParam String snils, @RequestParam MultiValueMap<String, String> form) {
@@ -232,24 +284,4 @@ public class AdminController {
         return "redirect:/admin/user/edit/" + user.getId();
     }
 
-    @PostMapping("/admin/sto/{stoid}/delete/employee/{id}")
-    public String deleteEmployeeFromSto(@RequestParam("email") String email, @PathVariable Long id, @PathVariable Long stoid) {
-        stoService.removeEmployeeFromSto(stoid, employeeService.getEmployeeById(id));
-        return "redirect:/admin/stos";
-    }
-
-    @PostMapping("/admin/provider/{providerid}/delete/detail/{id}")
-    public String deleteDetailFromProvider(@RequestParam("email") String email, @PathVariable Long id, @PathVariable Long providerid) {
-        detailProviderService.removeDetailFromProvider(providerid, detailService.getDetailById(id));
-        return "redirect:/admin/detailproviders";
-    }
-
-
-    @PostMapping("/admin/delete/review/{id}")
-    public String deleteReview(@RequestParam List<String> offers, @PathVariable Long id) {
-        for (String offer : offers) {
-            offerService.removeReviewFromOffer(offerService.getOfferByName(offer).getId(), reviewService.getReview(id));
-        }
-        return "redirect:/user/reviews";
-    }
 }

@@ -60,6 +60,8 @@ public class DetailProviderService {
         detailProviderRepository.save(detailProvider);
     }
 
+
+
     public Set<Detail> getProviderDetails(Long providerId) {
         return detailProviderRepository.getProviderDetails(providerId);
     }
