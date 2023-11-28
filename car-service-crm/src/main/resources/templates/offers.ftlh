@@ -12,7 +12,7 @@
             align-items: center;
             justify-content: center;"><#if user.isUser()>
             <button style="width: 70%" class="btn btn-outline-dark my-2 my-sm-0" type="button"
-                    onclick="window.location.href = '/user/create/purchase'">
+                    onclick="window.location.href = '/user/create/purchase/form'">
                 Сделать заказ
             </button>
         </#if>

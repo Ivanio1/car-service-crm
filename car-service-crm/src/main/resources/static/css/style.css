@@ -89,3 +89,11 @@ td{
         max-width: 100%;
     }
 }
+
+.verticalLine {
+    border-left: 1px solid #808080;
+    border-right: 1px solid #808080;
+    padding-left: 15px;
+    padding-right: 15px;
+
+}

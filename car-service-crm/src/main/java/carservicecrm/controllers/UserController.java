@@ -72,7 +72,7 @@ public class UserController {
     @PostMapping("/delete/user/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deleteProduct(@PathVariable Long id, Principal principal) {
-        for (Review review: userService.getUserById(id).getReviews()) {
+        for (Review review : userService.getUserById(id).getReviews()) {
             for (Offer offer : offerService.listOffers("")) {
                 offerService.removeReviewFromOffer(offer.getId(), review);
             }
@@ -98,7 +98,7 @@ public class UserController {
         review.setReviewText(reviewText);
         review.setRating(rating);
         for (String key : form.keySet()) {
-            if (!(Objects.equals(key, "reviewText")|| Objects.equals(key, "rating") || Objects.equals(key, "email") || Objects.equals(key, "_csrf"))) {
+            if (!(Objects.equals(key, "reviewText") || Objects.equals(key, "rating") || Objects.equals(key, "email") || Objects.equals(key, "_csrf"))) {
                 Offer offer1 = offerService.getOfferByName(key);
                 offerService.addReviewToOffer(offer1.getId(), review);
                 reviewService.saveReview(review);
@@ -148,9 +148,9 @@ public class UserController {
         return "redirect:/user/my/cars";
     }
 
-    @GetMapping("/user/create/purchase")
-    public String userCreatePurchase(Model model, Principal principal) {
-        User user= userService.getUserByPrincipal(principal);
+    @GetMapping("/user/create/purchase/form")
+    public String userCreatePurchaseFrom(Model model, Principal principal) {
+        User user = userService.getUserByPrincipal(principal);
         model.addAttribute("cars", userService.getUserCars(user.getId()));
         model.addAttribute("offers", offerService.listOffers(""));
         model.addAttribute("stos", stoService.list());
@@ -158,5 +158,10 @@ public class UserController {
         return "purchase-form";
     }
 
+    @PostMapping("/user/create/purchase")
+    public String userCreatePurchaseFrom(@RequestParam("email") String email, @RequestParam String offer, @RequestParam String sto, @RequestParam String car) {
+        System.out.println("Yes");
+        return "redirect:/";
+    }
 
 }
