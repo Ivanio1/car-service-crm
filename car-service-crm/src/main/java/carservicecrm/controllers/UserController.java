@@ -26,6 +26,8 @@ public class UserController {
     private final OfferService offerService;
     private final QuestionService questionService;
     private final CarService carService;
+    private final StoService stoService;
+
 
     @GetMapping("/login")
     public String login(Principal principal, Model model) {
@@ -47,7 +49,6 @@ public class UserController {
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "registration";
     }
-
 
     @PostMapping("/registration")
     public String createUser(User user, Model model) {
@@ -75,7 +76,6 @@ public class UserController {
             for (Offer offer : offerService.listOffers("")) {
                 offerService.removeReviewFromOffer(offer.getId(), review);
             }
-            //reviewService.deleteReview(review.getId());
         }
         userService.deleteUser(id);
         userService.deleteUser(id);
@@ -146,6 +146,16 @@ public class UserController {
     public String deleteCar(@RequestParam("email") String email, @PathVariable Long id) {
         userService.removeCarFromUser(userService.getUserByEmail(email).getId(), carService.getCar(id));
         return "redirect:/user/my/cars";
+    }
+
+    @GetMapping("/user/create/purchase")
+    public String userCreatePurchase(Model model, Principal principal) {
+        User user= userService.getUserByPrincipal(principal);
+        model.addAttribute("cars", userService.getUserCars(user.getId()));
+        model.addAttribute("offers", offerService.listOffers(""));
+        model.addAttribute("stos", stoService.list());
+        model.addAttribute("user", user);
+        return "purchase-form";
     }
 
 
