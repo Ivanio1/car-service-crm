@@ -25,5 +25,5 @@ public interface PurchaseRepository extends JpaRepository<Purchase,Long> {
 
     @Transactional
     @Query(value = "select update_purchase(:purchaseId) ", nativeQuery = true)
-    Integer updatePurchase(@Param("purchaseId") Long purchaseId);
+    void updatePurchase(@Param("purchaseId") Long purchaseId);
 }
