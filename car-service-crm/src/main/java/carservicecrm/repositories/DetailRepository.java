@@ -22,8 +22,7 @@ public interface DetailRepository extends JpaRepository<Detail,Long> {
     @Query(value = "SELECT * FROM is_stock_of_detail_greater(:id,:num)", nativeQuery = true)
     List<Detail> isBiggerThanNum(@Param("id") Integer id,@Param("num") Integer num);
 
-    @Modifying
     @Transactional
-    @Query(value = "CALL fill_detail_count(:id,:num)", nativeQuery = true)
+    @Query(value = "SELECT fill_detail_count(:id,:num)", nativeQuery = true)
     void updateStorageStock(@Param("id") Long id,@Param("num") Integer num);
 }

@@ -6,7 +6,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -38,7 +41,20 @@ public class DetailService {
     }
 
     public List<Detail> listStorage() {
-        return detailRepository.findAllInStorage();
+        List<Detail> details = detailRepository.findAllInStorage();
+        Map<String, Detail> uniqueDetails = new HashMap<>();
+        for (Detail detail : details) {
+            String name = detail.getName();
+            int storageStock = detail.getStoragestock();
+            if (uniqueDetails.containsKey(name)) {
+                Detail existingDetail = uniqueDetails.get(name);
+                existingDetail.setStoragestock(existingDetail.getStoragestock() + storageStock);
+            } else {
+                uniqueDetails.put(name, detail);
+            }
+        }
+
+        return new ArrayList<>(uniqueDetails.values());
     }
 
     public void updateStorageStock(Long id, Integer number){

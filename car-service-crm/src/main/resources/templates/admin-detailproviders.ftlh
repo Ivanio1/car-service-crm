@@ -1,10 +1,12 @@
 <#import "blocks/template.ftlh" as t>
 <@t.template user>
-    <h1 style="text-align: center">Поставщики</h1><hr>
+    <h1 style="text-align: center">Поставщики</h1>
+    <hr>
     <div style="overflow-y: scroll;
                     height: 400px;">
         <table class="table table-hover table-dark table-striped">
-            <thead><tr>
+            <thead>
+            <tr>
                 <th scope="col">Название</th>
                 <th scope="col">Контактные данные</th>
                 <th scope="col">Доступные детали</th>
@@ -37,13 +39,14 @@
                 <h3>Нет поставщиков</h3>
             </#list>
             </tbody>
-        </table></div>
+        </table>
+    </div>
     <hr>
     <h2>Добавить нового поставщика</h2>
     <form action="/admin/add/provider" method="post">
         <div id="timeField">
             <label>Название: <input type="text" name="name" required></label>
-            <label>Контактные данные: <input type="text" name="contact" required ></label>
+            <label>Контактные данные: <input type="text" name="contact" required></label>
 
         </div>
         <input type="hidden" value="${user.id}" name="userId">
@@ -59,20 +62,20 @@
             <label>Введите название: <input type="text" name="name" required></label>
             <label>Введите количество: <input type="number" name="stock" required></label>
             <label>Введите цену: <input type="number" name="price" required></label>
-            <label>Выберите поставщика детали:
-                <div style="overflow-y: scroll;height: 100px">
-                    <#list providers as provider>
-                        <div>
-                            <label><input type="checkbox" name="${provider.name}">${provider.name}
-                            </label>
-                        </div>
-                    </#list>
-                </div>
+            <label>Выберите поставщика детали(Одинаковая деталь добавляется к каждому поставщику отдельно):
+                    <select name="provider" id="offer-select">
+                        <option value="">--Выберите поставщика--</option>
+                        <#list providers as provider>
+                            <option value="${provider.name}">${provider.name}</option>
+                        <#else>
+                            <h1 style="text-align: center">Ничего не найдено</h1>
+                        </#list>
+                    </select>
             </label>
         </div>
         <br>
         <input type="hidden" value="${user.id}" name="userId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
-        <button id="saveButton" type="submit" class="btn btn-dark" >Сохранить деталь</button>
+        <button id="saveButton" type="submit" class="btn btn-dark">Сохранить деталь</button>
     </form>
 </@t.template>

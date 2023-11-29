@@ -222,18 +222,15 @@ public class AdminController {
     }
 
     @PostMapping("/admin/add/detail/provider")
-    public String addDetail(@RequestParam("userId") User user, @RequestParam String name, @RequestParam Integer stock, @RequestParam Integer price, @RequestParam MultiValueMap<String, String> form) {
+    public String addDetail(@RequestParam("userId") User user, @RequestParam String name, @RequestParam Integer stock, @RequestParam Integer price, @RequestParam String provider) {
         Detail detail = new Detail();
         detail.setName(name);
         detail.setPrice(price);
         detail.setStock(stock);
-        for (String key : form.keySet()) {
-            if (!(Objects.equals(key, "name") || Objects.equals(key, "stock") || Objects.equals(key, "price") || Objects.equals(key, "userId") || Objects.equals(key, "_csrf"))) {
-                DetailProvider provider = detailProviderService.getProviderByName(key);
-                detailProviderService.addDetailToProvider(provider.getId(), detail);
-                detailService.saveDetail(detail);
-            }
-        }
+        detail.setStoragestock(0);
+        DetailProvider provider1 = detailProviderService.getProviderByName(provider);
+        detailProviderService.addDetailToProvider(provider1.getId(), detail);
+        detailService.saveDetail(detail);
         return "redirect:/admin/detailproviders";
     }
 
@@ -250,10 +247,10 @@ public class AdminController {
     }
 
     @PostMapping("/admin/buy/detail/from/{id}")
-    public String buyDetailFromProvider(@RequestParam("email") String email, @PathVariable Long id, @RequestParam String detail, @RequestParam Integer storagestock) {
-        Detail detail1 = detailService.getDetailByName(detail);
+    public String buyDetailFromProvider(@RequestParam("email") String email, @PathVariable Long id, @RequestParam Long detail, @RequestParam Integer storagestock) {
+        Detail detail1 = detailService.getDetailById(detail);
         Integer tmp = detail1.getStock();
-        detailService.updateStorageStock(detail1.getId(),storagestock);
+        detailService.updateStorageStock(detail1.getId(), storagestock);
         return "redirect:/admin/details";
     }
 

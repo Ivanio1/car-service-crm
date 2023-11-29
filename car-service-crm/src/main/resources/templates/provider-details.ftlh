@@ -41,7 +41,7 @@
         <label>Детали: <select name="detail" id="offer-select">
                 <option value="">--Выберите деталь--</option>
                 <#list details as detail>
-                    <option value="${detail.name}"  data-stock="${detail.stock}">${detail.name}</option>
+                    <option value="${detail.id}"  data-stock="${detail.stock}">${detail.name}</option>
                 <#else>
                     <h1 style="text-align: center">Ничего не найдено</h1>
                 </#list>
