@@ -36,6 +36,7 @@ public class AdminController {
     private final DetailService detailService;
     private final DetailProviderService detailProviderService;
     private final AdministratorService administratorService;
+    private final PurchaseService purchaseService;
 
 
     @GetMapping("/admin")
@@ -261,6 +262,21 @@ public class AdminController {
         return "admin-details";
     }
 
+
+    @GetMapping("/admin/unallocated/purchases")
+    public String adminunalloc(Model model, Principal principal) {
+        model.addAttribute("purchases", purchaseService.listUnalloc());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-unalloc";
+    }
+
+
+    @GetMapping("/admin/allocated/purchases")
+    public String adminalloc(Model model, Principal principal) {
+        model.addAttribute("details", purchaseService.listAlloc());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-alloc";
+    }
 
     @PostMapping("/admin/delete/review/{id}")
     public String deleteReview(@RequestParam List<String> offers, @PathVariable Long id) {

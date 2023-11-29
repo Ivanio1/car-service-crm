@@ -19,6 +19,15 @@ public class PurchaseService {
         return purchaseRepository.findAllPurchases();
     }
 
+    public List<Purchase> listUnalloc() {
+        return purchaseRepository.findAllUnAllocPurchases();
+    }
+
+    public List<Purchase> listAlloc() {
+        return purchaseRepository.findAllAllocPurchases();
+    }
+
+
     public void savePurchase(Purchase purchase) {
         try {
             purchaseRepository.save(purchase);
