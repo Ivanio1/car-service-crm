@@ -1,10 +1,10 @@
 package carservicecrm.repositories;
 
 import carservicecrm.models.Purchase;
-import carservicecrm.models.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -21,4 +21,9 @@ public interface PurchaseRepository extends JpaRepository<Purchase,Long> {
     @Transactional
     @Query("DELETE FROM Purchase q WHERE q.id = :purchaseId")
     void deletePurchaseById(Long purchaseId);
+
+
+    @Transactional
+    @Query(value = "select update_purchase(:purchaseId) ", nativeQuery = true)
+    Integer updatePurchase(@Param("purchaseId") Long purchaseId);
 }

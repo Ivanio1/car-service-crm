@@ -1,9 +1,7 @@
 package carservicecrm.services;
 
 import carservicecrm.models.Purchase;
-import carservicecrm.models.Review;
 import carservicecrm.repositories.PurchaseRepository;
-import carservicecrm.repositories.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,16 +19,16 @@ public class PurchaseService {
         return purchaseRepository.findAllPurchases();
     }
 
-    public boolean savePurchase(Purchase purchase) {
-        try{
+    public void savePurchase(Purchase purchase) {
+        try {
             purchaseRepository.save(purchase);
-        }catch (Exception e){
-            return false;
+            purchaseRepository.updatePurchase(purchase.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return true;
     }
 
-    public Purchase getPurchase(Long id){
+    public Purchase getPurchase(Long id) {
         return purchaseRepository.findPurchaseById(id);
     }
 

@@ -135,7 +135,6 @@ public class UserController {
     @GetMapping("/user/my/purchases")
     public String userpurchases(Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
-        System.out.println(user.getId());
         model.addAttribute("purchases", userService.getUserPurchases(user.getId()));
         model.addAttribute("user", user);
         return "user-purchases";
