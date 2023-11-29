@@ -30,6 +30,10 @@ public class Offer {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Review> reviews = new HashSet<>();
 
+    @ManyToMany(mappedBy = "offers")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Purchase> purchases = new HashSet<>();
+
     public void addReview(Review review) {
         reviews.add(review);
         review.getOffers().add(this);
@@ -43,6 +47,28 @@ public class Offer {
 
         }
 
+    }
+
+    public void addPurchase(Purchase purchase) {
+        purchases.add(purchase);
+        purchase.getOffers().add(this);
+    }
+
+    public void removePurchase(Purchase purchase) {
+        try{
+            purchases.remove(purchase);
+            purchase.getOffers().remove(this);
+        }catch (Exception ignored){
+
+        }
+    }
+
+    public Set<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(Set<Purchase> purchases) {
+        this.purchases = purchases;
     }
 
     public Set<Review> getReviews() {

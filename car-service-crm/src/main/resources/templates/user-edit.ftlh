@@ -16,6 +16,7 @@
         <br> <br>
     </form>
 
+
     <form action="/admin/add/employee/sto" method="post">
         <hr>
         <div id="snilsField" style="display: none;">
@@ -36,6 +37,17 @@
         <input type="hidden" value="${user.id}" name="userId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <button id="saveButton" type="submit" class="btn btn-dark" style="display: none;">Сохранить сотрудника</button>
+    </form>
+
+    <form action="/admin/add/admin" method="post">
+        <hr>
+        <div id="adminField" style="display: none;">
+            <p>Сначала сохраните роль пользователя и его СНИЛС при роли EMPLOYEE!</p></div>
+        <br>
+        <input type="hidden" value="${user.id}" name="userId">
+        <input type="hidden" value="${_csrf.token}" name="_csrf">
+        <button id="saveButton5" type="submit" class="btn btn-dark" style="display: none;">Сохранить администратора
+        </button>
     </form>
 
     <form action="/admin/add/worker" method="post">
@@ -80,6 +92,11 @@
         window.addEventListener("load", toggleTextField);
 
         function toggleTextField() {
+            var checkbox5 = document.querySelector('input[name="ROLE_ADMIN"]');
+            var textField5 = document.getElementById("adminField");
+            var saveButton5 = document.getElementById("saveButton5");
+
+
             var checkbox = document.querySelector('input[name="ROLE_EMPLOYEE"]');
             var textField = document.getElementById("snilsField");
             var saveButton = document.getElementById("saveButton");
@@ -126,6 +143,14 @@
             } else {
                 textField3.style.display = "none";
                 saveButton3.style.display = "none";
+            }
+
+            if (checkbox5.checked) {
+                textField5.style.display = "block";
+                saveButton5.style.display = "block";
+            } else {
+                textField5.style.display = "none";
+                saveButton5.style.display = "none";
             }
         }
     </script>

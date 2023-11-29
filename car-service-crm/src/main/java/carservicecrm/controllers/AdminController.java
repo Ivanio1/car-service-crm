@@ -35,6 +35,7 @@ public class AdminController {
     private final ReviewService reviewService;
     private final DetailService detailService;
     private final DetailProviderService detailProviderService;
+    private final AdministratorService administratorService;
 
 
     @GetMapping("/admin")
@@ -138,6 +139,15 @@ public class AdminController {
         return "redirect:/admin/user/edit/" + user.getId();
     }
 
+    @PostMapping("/admin/add/admin")
+    public String addAdmin(@RequestParam("userId") User user) {
+        Employee employee = employeeService.getEmployee(user.getId());
+        Administrator administrator = new Administrator();
+        administrator.setEmployee(employee);
+        employee.setAdministrator(administrator);
+        administratorService.saveAdmin(administrator);
+        return "redirect:/admin/user/edit/" + user.getId();
+    }
 
     @PostMapping("/admin/add/manufacturer")
     public String addmanufacturer(@RequestParam("userId") User user, @RequestParam String detail_specialization) {

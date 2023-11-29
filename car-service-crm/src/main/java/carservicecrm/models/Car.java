@@ -2,6 +2,8 @@ package carservicecrm.models;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -18,6 +20,18 @@ public class Car {
     private Date creation_date;
     @ManyToMany(mappedBy = "cars",cascade = CascadeType.ALL)
     private Set<User> users = new HashSet<>();
+
+    @OneToMany(mappedBy = "car",orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Purchase> purchases;
+
+    public Set<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(Set<Purchase> purchases) {
+        this.purchases = purchases;
+    }
 
     public Long getId() {
         return id;

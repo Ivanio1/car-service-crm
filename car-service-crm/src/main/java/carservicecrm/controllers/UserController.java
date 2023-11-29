@@ -27,6 +27,7 @@ public class UserController {
     private final QuestionService questionService;
     private final CarService carService;
     private final StoService stoService;
+    private final PurchaseService purchaseService;
 
 
     @GetMapping("/login")
@@ -77,6 +78,12 @@ public class UserController {
                 offerService.removeReviewFromOffer(offer.getId(), review);
             }
         }
+        for (Purchase purchase : userService.getUserById(id).getPurchases()) {
+            for (Offer offer : offerService.listOffers("")) {
+                offerService.removePurchaseFromOffer(offer.getId(), purchase);
+            }
+        }
+
         userService.deleteUser(id);
         userService.deleteUser(id);
 
@@ -104,8 +111,6 @@ public class UserController {
                 reviewService.saveReview(review);
             }
         }
-
-
         return "redirect:/user/reviews";
     }
 
@@ -159,8 +164,19 @@ public class UserController {
     }
 
     @PostMapping("/user/create/purchase")
-    public String userCreatePurchaseFrom(@RequestParam("email") String email, @RequestParam String offer, @RequestParam String sto, @RequestParam String car) {
-        System.out.println("Yes");
+    public String userCreatePurchaseFrom(@RequestParam("email") String email,@RequestParam MultiValueMap<String, String> form, @RequestParam String sto, @RequestParam Long car) {
+        Purchase purchase = new Purchase();
+        purchase.setUser(userService.getUserByEmail(email));
+        Car car1 = carService.getCar(car);
+        purchase.setCar(car1);
+        purchase.setStoName(sto);
+        for (String key : form.keySet()) {
+            if (!(Objects.equals(key, "car") || Objects.equals(key, "sto") || Objects.equals(key, "email") || Objects.equals(key, "_csrf"))) {
+                Offer offer1 = offerService.getOfferByName(key);
+                offerService.addPurchaseToOffer(offer1.getId(), purchase);
+                purchaseService.savePurchase(purchase);
+            }
+        }
         return "redirect:/";
     }
 

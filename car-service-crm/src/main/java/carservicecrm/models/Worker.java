@@ -13,6 +13,9 @@ public class Worker {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Employee employee;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Purchase purchase;
+
     public Long getId() {
         return id;
     }
@@ -35,5 +38,13 @@ public class Worker {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
     }
 }

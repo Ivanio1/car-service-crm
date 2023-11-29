@@ -52,7 +52,19 @@ public class User implements UserDetails {
     private Set<Review> reviews;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<Purchase> purchases;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Question> questions;
+
+
+    public Set<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(Set<Purchase> purchases) {
+        this.purchases = purchases;
+    }
 
     public Set<Question> getQuestions() {
         return questions;

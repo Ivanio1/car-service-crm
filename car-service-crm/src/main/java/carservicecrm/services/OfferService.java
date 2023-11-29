@@ -1,11 +1,9 @@
 package carservicecrm.services;
 
 
-import carservicecrm.models.Image;
-import carservicecrm.models.Offer;
-import carservicecrm.models.Review;
-import carservicecrm.models.User;
+import carservicecrm.models.*;
 import carservicecrm.repositories.OfferRepository;
+import carservicecrm.repositories.PurchaseRepository;
 import carservicecrm.repositories.ReviewRepository;
 import carservicecrm.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +23,7 @@ public class OfferService {
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
+    private final PurchaseRepository purchaseRepository;
 
     public List<Offer> listOffers(String name) {
         if (name != null && !name.equals("")) return offerRepository.findAllByName(name);
@@ -92,7 +91,7 @@ public class OfferService {
 
     public void addReviewToOffer(Long userId, Review review) {
         Offer offer = offerRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Offer not found"));
 
         offer.addReview(review);
         offerRepository.save(offer);
@@ -101,7 +100,7 @@ public class OfferService {
     public void removeReviewFromOffer(Long userId, Review review) {
         try{
             Offer offer = offerRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new RuntimeException("Offer not found"));
 
             offer.removeReview(review);
             offerRepository.save(offer);
@@ -109,7 +108,27 @@ public class OfferService {
         }catch (Exception ignored){
 
         }
+    }
 
+    public void addPurchaseToOffer(Long userId, Purchase purchase) {
+        Offer offer = offerRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Offer not found"));
+
+        offer.addPurchase(purchase);
+        offerRepository.save(offer);
+    }
+
+    public void removePurchaseFromOffer(Long userId, Purchase purchase) {
+        try{
+            Offer offer = offerRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("Offer not found"));
+
+            offer.removePurchase(purchase);
+            offerRepository.save(offer);
+            purchaseRepository.deletePurchaseById(purchase.getId());
+        }catch (Exception ignored){
+
+        }
     }
 
 }

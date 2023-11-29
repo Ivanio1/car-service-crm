@@ -26,6 +26,8 @@ public class Employee {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Manufacturer manufacturer;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Administrator administrator;
 
     @ManyToMany( cascade =
             {
@@ -65,6 +67,14 @@ public class Employee {
 
     public Long getId() {
         return id;
+    }
+
+    public Administrator getAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(Administrator administrator) {
+        this.administrator = administrator;
     }
 
     public Set<Sto> getStoes() {
