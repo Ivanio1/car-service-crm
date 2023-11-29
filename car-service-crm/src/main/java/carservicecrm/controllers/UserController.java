@@ -132,6 +132,14 @@ public class UserController {
         return "user-cars";
     }
 
+    @GetMapping("/user/my/purchases")
+    public String userpurchases(Model model, Principal principal) {
+        User user = userService.getUserByPrincipal(principal);
+        System.out.println(user.getId());
+        model.addAttribute("purchases", userService.getUserPurchases(user.getId()));
+        model.addAttribute("user", user);
+        return "user-purchases";
+    }
 
     @PostMapping("/user/add/car")
     public String saveCar(@RequestParam("email") String email, @RequestParam String brand, @RequestParam String model, @RequestParam String creation_date) throws ParseException {

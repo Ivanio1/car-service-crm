@@ -37,9 +37,10 @@
         </#if>
 
         <#if user.isUser()>
-            <a class="btn btn-dark mb-3" style="text-align: center; width: 100%"
-               href="/my/products">
-                Мои заказы - не сделано
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 100%"
+               data-toggle="collapse" href="/user/my/purchases" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                Мои заказы
             </a>
             <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 100%"
                data-toggle="collapse" href="/user/my/cars" role="button"

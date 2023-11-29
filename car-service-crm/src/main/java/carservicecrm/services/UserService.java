@@ -2,6 +2,7 @@ package carservicecrm.services;
 
 import carservicecrm.models.Car;
 import carservicecrm.models.Employee;
+import carservicecrm.models.Purchase;
 import carservicecrm.models.User;
 import carservicecrm.models.enums.Role;
 import carservicecrm.repositories.CarRepository;
@@ -124,6 +125,10 @@ public class UserService {
 
     public Set<Car> getUserCars(Long userId) {
         return userRepository.getUserCars(userId);
+    }
+
+    public Set<Purchase> getUserPurchases(Long userId) {
+        return userRepository.getUserPurchases(userId);
     }
 
 

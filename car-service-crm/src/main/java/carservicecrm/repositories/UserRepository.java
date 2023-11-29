@@ -1,6 +1,7 @@
 package carservicecrm.repositories;
 
 import carservicecrm.models.Car;
+import carservicecrm.models.Purchase;
 import carservicecrm.models.Sto;
 import carservicecrm.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +19,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("SELECT u.cars FROM User u WHERE u.id = :userId")
     Set<Car> getUserCars(@Param("userId") Long userId);
+
+    @Query("SELECT u FROM Purchase u WHERE u.user.id = :userId")
+    Set<Purchase> getUserPurchases(@Param("userId") Long userId);
 
     User findUserById(Long id);
 }
