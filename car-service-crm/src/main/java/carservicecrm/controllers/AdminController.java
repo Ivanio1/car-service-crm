@@ -20,6 +20,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -273,7 +274,7 @@ public class AdminController {
 
     @GetMapping("/admin/allocated/purchases")
     public String adminalloc(Model model, Principal principal) {
-        model.addAttribute("details", purchaseService.listAlloc());
+        model.addAttribute("purchases", purchaseService.listAlloc());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin-alloc";
     }
@@ -307,4 +308,27 @@ public class AdminController {
         return "redirect:/admin/user/edit/" + user.getId();
     }
 
+    @PostMapping("/admin/alloc/form/{id}")
+    public String purchaseForm(@RequestParam("userId") User user, @PathVariable Long id,Model model) {
+        Purchase purchase = purchaseService.getPurchase(id);
+        model.addAttribute("purchase", purchase);
+        Sto sto1 = stoService.getStoByName(purchase.getStoName());
+        model.addAttribute("workers",stoService.getStoWorkers(sto1.getId()));
+        model.addAttribute("user",user);
+
+        return "admin-alloc-form";
+    }
+
+
+    @PostMapping("/admin/allocate/purchase/{id}")
+    public String allocatePurchase(@RequestParam("userId") User user, @PathVariable Long id, @RequestParam Long worker) {
+        User user1 = userService.getUserById(user.getId());
+        Purchase purchase = purchaseService.getPurchase(id);
+        Worker worker1 = workerService.getWorker(worker);
+        purchase.setAdministrator(user1.getEmployee().getAdministrator());
+        purchase.setWorker(worker1);
+        worker1.setPurchase(purchase);
+        purchaseService.savePurchase(purchase);
+        return "redirect:/admin/allocated/purchases";
+    }
 }

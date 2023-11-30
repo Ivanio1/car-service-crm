@@ -1,5 +1,6 @@
 package carservicecrm.services;
 
+import carservicecrm.models.Sto;
 import carservicecrm.models.Worker;
 import carservicecrm.repositories.WorkerRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,4 +27,8 @@ public class WorkerService {
     public List<Worker> list(){
         return workerRepository.findAll();
     }
+    public Worker getWorker(Long workerId) {
+        return workerRepository.findWorkerById(workerId);
+    }
+
 }

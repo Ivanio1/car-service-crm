@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -57,6 +58,17 @@ public class StoService {
 
     public Set<Employee> getStoEmployees(Long stoId) {
         return stoRepository.getStoEmployees(stoId);
+    }
+
+    public Set<Worker> getStoWorkers(Long stoId) {
+        Set<Employee> employees = stoRepository.getStoEmployees(stoId);
+        Set<Worker> workers = new HashSet<>();
+        for(Employee employee : employees) {
+            if(employee.getWorker() != null) {
+                workers.add(employee.getWorker());
+            }
+        }
+        return workers;
     }
 
     public Sto getSto(Long stoId) {

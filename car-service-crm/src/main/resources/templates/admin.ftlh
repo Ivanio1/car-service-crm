@@ -92,7 +92,6 @@
                 Сотрудники
             </a>
         </div>
-        <hr>
         <div style=" display: flex;
             height: 20%;
             flex-flow: row wrap;
