@@ -3,6 +3,8 @@ package carservicecrm.models;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "worker")
 public class Worker {
@@ -15,6 +17,17 @@ public class Worker {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Purchase purchase;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<WorkerRequest> workerRequests;
+
+    public Set<WorkerRequest> getWorkerRequests() {
+        return workerRequests;
+    }
+
+    public void setWorkerRequests(Set<WorkerRequest> workerRequests) {
+        this.workerRequests = workerRequests;
+    }
 
     public Long getId() {
         return id;
