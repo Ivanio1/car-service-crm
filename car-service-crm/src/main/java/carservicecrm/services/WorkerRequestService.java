@@ -1,8 +1,6 @@
 package carservicecrm.services;
 
-import carservicecrm.models.Question;
 import carservicecrm.models.WorkerRequest;
-import carservicecrm.repositories.QuestionRepository;
 import carservicecrm.repositories.WorkerRequestRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +27,7 @@ public class WorkerRequestService {
         return workerRequestRepository.findAllRequests();
     }
 
-    public void deleteQuestion(Long id) {
+    public void deleteRequest(Long id) {
         WorkerRequest request = workerRequestRepository.findRequestById(id);
         if (request != null) {
             workerRequestRepository.deleteRequestById(request.getId());

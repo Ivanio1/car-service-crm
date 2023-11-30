@@ -19,7 +19,6 @@ import java.security.Principal;
 @PreAuthorize("hasAnyAuthority('ROLE_OPERATOR','ROLE_ADMIN')")
 public class OperatorController {
     private final UserService userService;
-    private final OperatorService operatorService;
     private final QuestionService questionService;
 
     @GetMapping("/operator/panel")

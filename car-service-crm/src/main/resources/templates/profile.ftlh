@@ -32,8 +32,18 @@
         <#if user.isWorker()>
             <a class="btn btn-dark mb-3" style="text-align: center; width: 100%"
                href="/worker/panel">
-                Панель оператора
+                Панель работника
             </a><br>
+            <form action="/worker/add/request" method="post" id="application">
+                <h3>Проблемы?</h3>
+                <input type="text" name="questionText" required placeholder="Оставь запрос" style="border-radius: 7px;">
+                <input type="hidden" value="${user.email}" name="email">
+                <input type="hidden" value="${_csrf.token}" name="_csrf">
+                <br><br>
+                <button id="saveButton" type="submit" class="btn btn-dark" onclick="toggleTextField()">Отправить
+                </button>
+                <hr>
+            </form>
         </#if>
 
         <#if user.isUser()>
@@ -103,7 +113,7 @@
         function doSomeAnimationHere() {
             Swal.fire({
                 title: "Спасибо за обращение!",
-                text: "Скоро с вами свяжутся наши сотрудники и помогут решить любой вопрос!",
+                text: "Скоро с вами свяжутся наш администратор и поможет решить вопрос!",
                 icon: "success",
                 timer:3000,
                 showCancelButton: false,

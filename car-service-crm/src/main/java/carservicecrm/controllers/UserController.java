@@ -28,6 +28,7 @@ public class UserController {
     private final CarService carService;
     private final StoService stoService;
     private final PurchaseService purchaseService;
+    private final WorkerRequestService workerRequestService;
 
 
     @GetMapping("/login")

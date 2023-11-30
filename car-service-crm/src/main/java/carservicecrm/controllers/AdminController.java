@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.security.Provider;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,6 +36,7 @@ public class AdminController {
     private final DetailProviderService detailProviderService;
     private final AdministratorService administratorService;
     private final PurchaseService purchaseService;
+    private final WorkerRequestService workerRequestService;
 
 
     @GetMapping("/admin")
@@ -100,6 +99,13 @@ public class AdminController {
         model.addAttribute("stos", stoService.list());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin-stos";
+    }
+
+    @GetMapping("/admin/workerreqs")
+    public String adminreqs(Model model, Principal principal) {
+        model.addAttribute("reqs", workerRequestService.list());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-workerreqs";
     }
 
     @GetMapping("/admin/detailproviders")
@@ -197,6 +203,12 @@ public class AdminController {
     public String deleteProduct(@PathVariable Long id, Principal principal) {
         stoService.deleteSto(id);
         return "redirect:/admin/stos";
+    }
+
+    @PostMapping("/admin/delete/request/{id}")
+    public String deleteRequest(@PathVariable Long id, Principal principal) {
+        workerRequestService.deleteRequest(id);
+        return "redirect:/admin/workerreqs";
     }
 
     @PostMapping("/delete/provider/{id}")
