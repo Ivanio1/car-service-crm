@@ -34,6 +34,14 @@ public class Offer {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Purchase> purchases = new HashSet<>();
 
+    @ManyToMany(mappedBy = "offers")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Tool> tools = new HashSet<>();
+
+    @ManyToMany(mappedBy = "offers")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Detail> details = new HashSet<>();
+
     public void addReview(Review review) {
         reviews.add(review);
         review.getOffers().add(this);
@@ -61,6 +69,50 @@ public class Offer {
         }catch (Exception ignored){
 
         }
+    }
+
+
+    public void addTool(Tool tool) {
+        tools.add(tool);
+        tool.getOffers().add(this);
+    }
+
+    public void removeTool(Tool tool) {
+        try{
+            tools.remove(tool);
+            tool.getOffers().remove(this);
+        }catch (Exception ignored){
+
+        }
+    }
+
+    public void addDetail(Detail detail) {
+        details.add(detail);
+        detail.getOffers().add(this);
+    }
+
+    public void removeDetail(Detail detail) {
+        try{
+            details.remove(detail);
+            detail.getOffers().remove(this);
+        }catch (Exception ignored){
+
+        }
+    }
+    public Set<Detail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(Set<Detail> details) {
+        this.details = details;
+    }
+
+    public Set<Tool> getTools() {
+        return tools;
+    }
+
+    public void setTools(Set<Tool> tools) {
+        this.tools = tools;
     }
 
     public Set<Purchase> getPurchases() {

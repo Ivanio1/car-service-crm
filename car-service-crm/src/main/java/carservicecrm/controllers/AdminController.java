@@ -5,6 +5,7 @@ import carservicecrm.models.*;
 import carservicecrm.models.enums.Role;
 import carservicecrm.services.*;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Tolerate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +38,7 @@ public class AdminController {
     private final AdministratorService administratorService;
     private final PurchaseService purchaseService;
     private final WorkerRequestService workerRequestService;
-
+    private final ToolService toolService;
 
     @GetMapping("/admin")
     public String admin(Model model, Principal principal) {
@@ -248,6 +249,24 @@ public class AdminController {
         return "redirect:/admin/detailproviders";
     }
 
+    @PostMapping("/admin/add/tool")
+    public String addTool(@RequestParam("userId") User user, @RequestParam String name, @RequestParam Integer stock) {
+        Tool tool = new Tool();
+        tool.setName(name);
+        tool.setStock(stock);
+        toolService.saveTool(tool);
+        return "redirect:/admin/tools";
+    }
+
+    @PostMapping("/admin/delete/tool/{id}")
+    public String deleteTool(@PathVariable Long id) {
+        for (Offer offer : offerService.listOffers("")) {
+            offerService.removeToolFromOffer(offer.getId(), toolService.getToolById(id));
+        }
+        //toolService.deleteTool(id);
+        return "redirect:/admin/tools";
+    }
+
     @PostMapping("/admin/sto/{stoid}/delete/employee/{id}")
     public String deleteEmployeeFromSto(@RequestParam("email") String email, @PathVariable Long id, @PathVariable Long stoid) {
         stoService.removeEmployeeFromSto(stoid, employeeService.getEmployeeById(id));
@@ -275,6 +294,12 @@ public class AdminController {
         return "admin-details";
     }
 
+    @GetMapping("/admin/tools")
+    public String admintools(Model model, Principal principal) {
+        model.addAttribute("tools", toolService.list());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-tools";
+    }
 
     @GetMapping("/admin/unallocated/purchases")
     public String adminunalloc(Model model, Principal principal) {
@@ -321,23 +346,53 @@ public class AdminController {
     }
 
     @PostMapping("/admin/alloc/form/{id}")
-    public String purchaseForm(@RequestParam("userId") User user, @PathVariable Long id,Model model) {
+    public String purchaseForm(@RequestParam("userId") User user, @PathVariable Long id, Model model) {
         Purchase purchase = purchaseService.getPurchase(id);
         model.addAttribute("purchase", purchase);
         Sto sto1 = stoService.getStoByName(purchase.getStoName());
-        model.addAttribute("workers",stoService.getStoWorkers(sto1.getId()));
-        model.addAttribute("user",user);
-
+        model.addAttribute("workers", stoService.getStoWorkers(sto1.getId()));
+        model.addAttribute("user", user);
         return "admin-alloc-form";
+    }
+
+    @GetMapping("/admin/add/tool/detail/to/offer/{id}")
+    public String adminaddtooldetail(Model model, Principal principal, @PathVariable Long id) {
+        model.addAttribute("purchase", purchaseService.getPurchase(id));
+        model.addAttribute("tools", toolService.list());
+        model.addAttribute("details", detailService.listStorage());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-add-tool-detail";
+    }
+
+    @PostMapping("/admin/add/offer/detail/tool/{id}")
+    public String adminAddToolDetailToOffer(@RequestParam MultiValueMap<String, String> form, @PathVariable("id") Long id) {
+        Offer offer = offerService.getOfferById(id);
+        for (String key : form.keySet()) {
+            if (!(Objects.equals(key, "userId") || Objects.equals(key, "_csrf"))) {
+                try {
+                    Tool tool = toolService.getToolByName(key);
+
+                    if (tool != null) {
+                        offerService.addToolToOffer(offer.getId(), tool);
+                    } else {
+                        Detail detail = detailService.getDetailByName(key);
+                        offerService.addDetailToOffer(offer.getId(),detail);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return "redirect:/admin";
     }
 
 
     @PostMapping("/admin/allocate/purchase/{id}")
-    public String allocatePurchase(@RequestParam("userId") User user, @PathVariable Long id, @RequestParam Long worker) {
-        User user1 = userService.getUserById(user.getId());
+    public String allocatePurchase(@RequestParam("userId") User user, @PathVariable Long id, @RequestParam Long
+            worker) {
         Purchase purchase = purchaseService.getPurchase(id);
         Worker worker1 = workerService.getWorker(worker);
-        purchase.setAdministrator(user1.getEmployee().getAdministrator());
+        purchase.setAdministrator(user.getEmployee().getAdministrator());
         purchase.setWorker(worker1);
         worker1.setPurchase(purchase);
         purchaseService.savePurchase(purchase);

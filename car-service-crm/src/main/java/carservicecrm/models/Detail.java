@@ -32,6 +32,28 @@ public class Detail {
             inverseJoinColumns = @JoinColumn(name = "detailprovider_id"))
     private Set<DetailProvider> providers = new HashSet<>();
 
+
+    @ManyToMany( cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
+    @JoinTable(name = "offer_detail",
+            joinColumns = @JoinColumn(name = "detail_id"),
+            inverseJoinColumns = @JoinColumn(name = "offer_id"))
+    private Set<Offer> offers = new HashSet<>();
+
+
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
+    }
+
     public Integer getStoragestock() {
         return storagestock;
     }

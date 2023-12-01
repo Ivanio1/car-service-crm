@@ -2,10 +2,7 @@ package carservicecrm.services;
 
 
 import carservicecrm.models.*;
-import carservicecrm.repositories.OfferRepository;
-import carservicecrm.repositories.PurchaseRepository;
-import carservicecrm.repositories.ReviewRepository;
-import carservicecrm.repositories.UserRepository;
+import carservicecrm.repositories.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +21,8 @@ public class OfferService {
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
     private final PurchaseRepository purchaseRepository;
+    private final ToolRepository toolRepository;
+    private final DetailRepository detailRepository;
 
     public List<Offer> listOffers(String name) {
         if (name != null && !name.equals("")) return offerRepository.findAllByName(name);
@@ -126,6 +125,44 @@ public class OfferService {
             offer.removePurchase(purchase);
             offerRepository.save(offer);
             purchaseRepository.deletePurchaseById(purchase.getId());
+        }catch (Exception ignored){
+
+        }
+    }
+
+    public void addToolToOffer(Long userId, Tool tool) {
+        Offer offer = offerRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Offer not found"));
+
+        offer.addTool(tool);
+        offerRepository.save(offer);
+    }
+
+    public void removeToolFromOffer(Long userId, Tool tool) {
+        try{
+            Offer offer = offerRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("Offer not found"));
+            offer.removeTool(tool);
+            offerRepository.save(offer);
+            toolRepository.deleteToolById(tool.getId());
+        }catch (Exception ignored){
+
+        }
+    }
+    public void addDetailToOffer(Long userId, Detail detail) {
+        Offer offer = offerRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Offer not found"));
+        offer.addDetail(detail);
+        offerRepository.save(offer);
+    }
+
+    public void removeDetailFromOffer(Long userId, Detail detail) {
+        try{
+            Offer offer = offerRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("Offer not found"));
+            offer.removeDetail(detail);
+            offerRepository.save(offer);
+            detailRepository.deleteDetailById(detail.getId());
         }catch (Exception ignored){
 
         }

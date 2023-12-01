@@ -11,9 +11,16 @@ import java.util.List;
 
 public interface DetailRepository extends JpaRepository<Detail,Long> {
 
+    @Query("SELECT q FROM Detail q WHERE q.id = :id")
     Detail findDetailById(Long id);
 
+    @Query("SELECT q FROM Detail q WHERE q.name = :name")
     Detail findByName(String name);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Detail q WHERE q.id = :detailId")
+    void deleteDetailById(Long detailId);
 
     @Query("SELECT q FROM Detail q WHERE q.storagestock > 0")
     List<Detail> findAllInStorage();

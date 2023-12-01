@@ -1,6 +1,8 @@
 package carservicecrm.controllers;
 
+import carservicecrm.models.Worker;
 import carservicecrm.models.WorkerRequest;
+import carservicecrm.services.PurchaseService;
 import carservicecrm.services.UserService;
 import carservicecrm.services.WorkerRequestService;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +21,13 @@ import java.security.Principal;
 public class WorkerController {
     private final WorkerRequestService workerRequestService;
     private final UserService userService;
+    private final PurchaseService purchaseService;
 
     @GetMapping("/worker/panel")
     public String panel(Model model, Principal principal) {
+        Worker worker = userService.getUserByPrincipal(principal).getEmployee().getWorker();
         model.addAttribute("user", userService.getUserByPrincipal(principal));
-//        model.addAttribute("questions", questionService.list());
+        model.addAttribute("purchases", purchaseService.listAlloc());
         return "worker";
     }
 

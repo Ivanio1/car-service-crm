@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers( "/", "/offer/**", "/images/**", "/registration", "/static/**","/error","user/reviews").permitAll()
                         .requestMatchers("/offer/**", "/image/**","/user/**","/operator/add/question")
-                        .hasAnyAuthority("ROLE_ADMIN","ROLE_USER","ROLE_OPERATOR")
+                        .hasAnyAuthority("ROLE_ADMIN","ROLE_USER","ROLE_OPERATOR","ROLE_WORKER")
                         .requestMatchers("/operator/**")
                         .hasAnyAuthority("ROLE_ADMIN","ROLE_OPERATOR")
                         .requestMatchers("/worker/**")

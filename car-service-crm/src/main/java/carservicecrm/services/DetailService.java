@@ -1,6 +1,7 @@
 package carservicecrm.services;
 
 import carservicecrm.models.Detail;
+import carservicecrm.models.Tool;
 import carservicecrm.repositories.DetailRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,13 @@ public class DetailService {
 
     public boolean saveDetail(Detail detail) {
         try{
-            detailRepository.save(detail);
+            Detail existingDetail = detailRepository.findByName(detail.getName());
+            if (existingDetail != null) {
+                existingDetail.setStock(detail.getStoragestock()+existingDetail.getStoragestock());
+                detailRepository.save(existingDetail);
+            } else {
+                detailRepository.save(detail);
+            }
         }catch (Exception e){
             return false;
         }
@@ -42,19 +49,19 @@ public class DetailService {
 
     public List<Detail> listStorage() {
         List<Detail> details = detailRepository.findAllInStorage();
-        Map<String, Detail> uniqueDetails = new HashMap<>();
-        for (Detail detail : details) {
-            String name = detail.getName();
-            int storageStock = detail.getStoragestock();
-            if (uniqueDetails.containsKey(name)) {
-                Detail existingDetail = uniqueDetails.get(name);
-                existingDetail.setStoragestock(existingDetail.getStoragestock() + storageStock);
-            } else {
-                uniqueDetails.put(name, detail);
-            }
-        }
-
-        return new ArrayList<>(uniqueDetails.values());
+//        Map<String, Detail> uniqueDetails = new HashMap<>();
+//        for (Detail detail : details) {
+//            String name = detail.getName();
+//            int storageStock = detail.getStoragestock();
+//            if (uniqueDetails.containsKey(name)) {
+//                Detail existingDetail = uniqueDetails.get(name);
+//                existingDetail.setStoragestock(existingDetail.getStoragestock() + storageStock);
+//            } else {
+//                uniqueDetails.put(name, detail);
+//            }
+//        }
+//        return new ArrayList<>(uniqueDetails.values());
+        return details;
     }
 
     public void updateStorageStock(Long id, Integer number){

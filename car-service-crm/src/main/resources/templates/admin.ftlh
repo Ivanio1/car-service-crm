@@ -41,12 +41,18 @@
             </a>
         </div>
         <hr>
-        <h2 style="text-align: center">Заказ и учет деталей</h2>
+        <h2 style="text-align: center">Заказ и учет деталей и инструментов</h2>
         <div style=" display: flex;
             height: 20%;
             flex-flow: row wrap;
             align-items: center;
             justify-content: center;">
+            <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%"
+               data-toggle="collapse" href="/admin/tools" role="button"
+               aria-expanded="true" aria-controls="collapseExample">
+                Инструменты на складе
+            </a>
+            &nbsp &nbsp &nbsp
             <a class="btn btn-dark mt-3 mb-3" style="text-align: center; width: 30%"
                data-toggle="collapse" href="/admin/details" role="button"
                aria-expanded="true" aria-controls="collapseExample">
