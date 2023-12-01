@@ -301,6 +301,20 @@ public class AdminController {
         return "admin-tools";
     }
 
+    @GetMapping("/admin/available/tools")
+    public String adminavtools(Model model, Principal principal) {
+        model.addAttribute("tools", toolService.listAvailable());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-tools";
+    }
+
+    @GetMapping("/admin/unavailable/tools")
+    public String adminunavtools(Model model, Principal principal) {
+        model.addAttribute("tools", toolService.listUnAvailable());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-tools";
+    }
+
     @GetMapping("/admin/unallocated/purchases")
     public String adminunalloc(Model model, Principal principal) {
         model.addAttribute("purchases", purchaseService.listUnalloc());

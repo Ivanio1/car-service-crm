@@ -31,4 +31,16 @@ public class WorkerService {
         return workerRepository.findWorkerById(workerId);
     }
 
+    public void update_purchase_status_to_done(Long id){
+        workerRepository.update_purchase_status_to_done(id);
+    }
+
+    public void update_purchase_status_to_waiting(Long id){
+        workerRepository.update_purchase_status_to_waiting(id);
+    }
+
+    public void update_purchase_status_to_in_process(Long id){
+        workerRepository.update_purchase_status_to_in_process(id);
+    }
+
 }

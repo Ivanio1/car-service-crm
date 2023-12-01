@@ -52,7 +52,15 @@ public class ToolService {
 
 
     public List<Tool> list() {
-        return toolRepository.findAll();
+        return toolRepository.findAllTools();
+    }
+
+    public List<Tool> listAvailable() {
+        return toolRepository.get_available_tools();
+    }
+
+    public List<Tool> listUnAvailable() {
+        return toolRepository.get_zero_tools();
     }
 
 }

@@ -14,7 +14,6 @@ public interface PurchaseRepository extends JpaRepository<Purchase,Long> {
     @Query("SELECT r FROM Purchase r")
     List<Purchase> findAllPurchases();
 
-
     @Query("SELECT r FROM Purchase r where r.administrator.id IS NULL")
     List<Purchase> findAllUnAllocPurchases();
 

@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -27,6 +29,16 @@ public class PurchaseService {
         return purchaseRepository.findAllAllocPurchases();
     }
 
+    public List<Purchase> listAllocByWorker(Long id) {
+        List<Purchase> purchases = purchaseRepository.findAllAllocPurchases();
+        List<Purchase> finalpurchases = new ArrayList<>();
+        for (Purchase p: purchases) {
+            if(Objects.equals(p.getWorker().getId(), id)){
+                finalpurchases.add(p);
+            }
+        }
+        return finalpurchases;
+    }
 
     public void savePurchase(Purchase purchase) {
         try {

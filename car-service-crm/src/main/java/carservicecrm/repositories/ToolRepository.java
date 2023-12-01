@@ -15,6 +15,14 @@ public interface ToolRepository extends JpaRepository<Tool,Long> {
     @Query("SELECT r FROM Tool r")
     List<Tool> findAllTools();
 
+    @Transactional
+    @Query(value = "SELECT * FROM get_zero_tools()", nativeQuery = true)
+    List<Tool> get_zero_tools();
+
+    @Transactional
+    @Query(value = "SELECT * FROM get_available_tools()", nativeQuery = true)
+    List<Tool> get_available_tools();
+
     @Query("SELECT q FROM Tool q WHERE q.id = :id")
     Tool findToolById(Long id);
 
