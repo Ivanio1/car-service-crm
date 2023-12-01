@@ -48,23 +48,14 @@ public class DetailService {
     }
 
     public List<Detail> listStorage() {
-        List<Detail> details = detailRepository.findAllInStorage();
-//        Map<String, Detail> uniqueDetails = new HashMap<>();
-//        for (Detail detail : details) {
-//            String name = detail.getName();
-//            int storageStock = detail.getStoragestock();
-//            if (uniqueDetails.containsKey(name)) {
-//                Detail existingDetail = uniqueDetails.get(name);
-//                existingDetail.setStoragestock(existingDetail.getStoragestock() + storageStock);
-//            } else {
-//                uniqueDetails.put(name, detail);
-//            }
-//        }
-//        return new ArrayList<>(uniqueDetails.values());
-        return details;
+        return detailRepository.findAllInStorage();
     }
 
     public void updateStorageStock(Long id, Integer number){
         detailRepository.updateStorageStock(id,number);
+    }
+
+    public void updateStorageStockByName(String name, Integer number){
+        detailRepository.updateStorageStockbyname(name,number);
     }
 }

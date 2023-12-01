@@ -32,4 +32,8 @@ public interface DetailRepository extends JpaRepository<Detail,Long> {
     @Transactional
     @Query(value = "SELECT fill_detail_count(:id,:num)", nativeQuery = true)
     void updateStorageStock(@Param("id") Long id,@Param("num") Integer num);
+
+    @Transactional
+    @Query(value = "SELECT fill_detail_count_by_name(:name,:num)", nativeQuery = true)
+    void updateStorageStockbyname(@Param("name") String name,@Param("num") Integer num);
 }
