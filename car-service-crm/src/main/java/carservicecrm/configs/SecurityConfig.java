@@ -31,6 +31,8 @@ public class SecurityConfig {
                         .hasAnyAuthority("ROLE_ADMIN","ROLE_OPERATOR")
                         .requestMatchers("/worker/**")
                         .hasAnyAuthority("ROLE_ADMIN","ROLE_WORKER")
+                        .requestMatchers("/admin/**")
+                        .hasAnyAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

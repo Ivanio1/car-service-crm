@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 public interface DetailRepository extends JpaRepository<Detail,Long> {
 
@@ -16,6 +17,9 @@ public interface DetailRepository extends JpaRepository<Detail,Long> {
 
     @Query("SELECT q FROM Detail q WHERE q.name = :name")
     Detail findByName(String name);
+
+    @Query("SELECT q FROM Detail q WHERE q.name = :name")
+    Set<Detail> findAllByName(String name);
 
     @Modifying
     @Transactional
@@ -27,7 +31,11 @@ public interface DetailRepository extends JpaRepository<Detail,Long> {
 
     @Transactional
     @Query(value = "SELECT * FROM is_stock_of_detail_greater(:id,:num)", nativeQuery = true)
-    List<Detail> isBiggerThanNum(@Param("id") Integer id,@Param("num") Integer num);
+    Boolean isBiggerThanNum(@Param("id") Long id,@Param("num") Integer num);
+
+    @Transactional
+    @Query(value = "SELECT * FROM is_stock_of_detail_greater_by_name(:name,:num)", nativeQuery = true)
+    Boolean isBiggerThanNumByName(@Param("name") String name,@Param("num") Integer num);
 
     @Transactional
     @Query(value = "SELECT fill_detail_count(:id,:num)", nativeQuery = true)

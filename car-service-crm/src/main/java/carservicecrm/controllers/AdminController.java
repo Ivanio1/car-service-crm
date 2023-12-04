@@ -245,7 +245,7 @@ public class AdminController {
         detail.setStoragestock(0);
         DetailProvider provider1 = detailProviderService.getProviderByName(provider);
         detailProviderService.addDetailToProvider(provider1.getId(), detail);
-        detailService.saveDetail(detail);
+        detailService.saveDetail(detail, provider1);
         return "redirect:/admin/detailproviders";
     }
 
@@ -264,7 +264,7 @@ public class AdminController {
         return "redirect:/admin/tools";
     }
 
-    @PostMapping("/admin/fill/tool")
+    @PostMapping("/admin/fill/tool/by/id")
     public String fillToolById(@RequestParam("userId") User user, @RequestParam String name, @RequestParam Integer stock) {
         toolService.fill_tool_count(toolService.getToolByName(name).getId(),stock);
         return "redirect:/admin/tools";
@@ -304,6 +304,13 @@ public class AdminController {
         model.addAttribute("details", detailService.listStorage());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin-details";
+    }
+
+    @PostMapping("/admin/get/details")
+    public String adminGetdetails(Model model, Principal principal,@RequestParam Integer num) {
+        model.addAttribute("details", detailService.listStorageIfBigger(num));
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
+        return "admin-available-details";
     }
 
     @GetMapping("/admin/tools")
