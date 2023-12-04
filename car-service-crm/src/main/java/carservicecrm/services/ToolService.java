@@ -50,6 +50,13 @@ public class ToolService {
         return toolRepository.findToolByName(name);
     }
 
+    public void fill_tool_count(Long id, Integer stock){
+        toolRepository.fillToolCount(id,stock);
+    }
+
+    public void fill_tool_count_by_name(String name, Integer stock){
+        toolRepository.fillToolCountByName(name,stock);
+    }
 
     public List<Tool> list() {
         return toolRepository.findAllTools();

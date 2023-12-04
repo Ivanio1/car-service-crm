@@ -258,6 +258,18 @@ public class AdminController {
         return "redirect:/admin/tools";
     }
 
+    @PostMapping("/admin/fill/tool")
+    public String fillTool(@RequestParam("userId") User user, @RequestParam String name, @RequestParam Integer stock) {
+        toolService.fill_tool_count_by_name(name,stock);
+        return "redirect:/admin/tools";
+    }
+
+    @PostMapping("/admin/fill/tool")
+    public String fillToolById(@RequestParam("userId") User user, @RequestParam String name, @RequestParam Integer stock) {
+        toolService.fill_tool_count(toolService.getToolByName(name).getId(),stock);
+        return "redirect:/admin/tools";
+    }
+
     @PostMapping("/admin/delete/tool/{id}")
     public String deleteTool(@PathVariable Long id) {
         for (Offer offer : offerService.listOffers("")) {

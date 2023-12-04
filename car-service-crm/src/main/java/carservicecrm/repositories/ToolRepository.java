@@ -34,4 +34,12 @@ public interface ToolRepository extends JpaRepository<Tool,Long> {
     @Query("DELETE FROM Tool q WHERE q.id = :toolId")
     void deleteToolById(Long toolId);
 
+    @Transactional
+    @Query(value = "SELECT fill_tool_count(:id,:num)", nativeQuery = true)
+    void fillToolCount(@Param("id") Long id, @Param("num") Integer num);
+
+    @Transactional
+    @Query(value = "SELECT fill_tool_count_by_name(:name,:num)", nativeQuery = true)
+    void fillToolCountByName(@Param("name") String name,@Param("num") Integer num);
+
 }

@@ -53,4 +53,23 @@
         <input type="hidden" value="${_csrf.token}" name="_csrf">
         <button id="saveButton" type="submit" class="btn btn-dark">Добавить</button>
     </form>
+    <hr>
+    <h2>Увеличить количество</h2>
+    <form action="/admin/fill/tool" method="post">
+        <div>
+            <label>Инструменты: <select name="name" id="offer-select">
+                    <option value="">--Выберите инструмент--</option>
+                    <#list tools as tool>
+                        <option value="${tool.name}" >${tool.name}</option>
+                    <#else>
+                        <h1 style="text-align: center">Ничего не найдено</h1>
+                    </#list>
+                </select></label>
+            <label>Введите количество: <input type="number" name="stock" required></label>
+        </div>
+        <br>
+        <input type="hidden" value="${user.id}" name="userId">
+        <input type="hidden" value="${_csrf.token}" name="_csrf">
+        <button id="saveButton" type="submit" class="btn btn-dark">Добавить</button>
+    </form>
 </@t.template>
