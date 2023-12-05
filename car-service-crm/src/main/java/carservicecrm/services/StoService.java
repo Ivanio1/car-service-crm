@@ -18,7 +18,7 @@ public class StoService {
     private final StoRepository stoRepository;
 
     public List<Sto> list() {
-        return stoRepository.findAll();
+        return stoRepository.findAllStoes();
     }
 
     public boolean saveSto(Sto sto) {
@@ -31,10 +31,9 @@ public class StoService {
     }
 
     public void deleteSto(Long id) {
-        Sto sto = stoRepository.findById(id)
-                .orElse(null);
+        Sto sto = stoRepository.findStoById(id);
         if (sto != null) {
-            stoRepository.delete(sto);
+            stoRepository.deleteStoById(sto.getId());
             log.info("STO with id = {} was deleted", id);
         } else {
             log.error("STO with id = {} is not found", id);
@@ -43,15 +42,13 @@ public class StoService {
 
 
     public void addEmployeeToSto(Long stoId, Employee employee) {
-        Sto sto = stoRepository.findById(stoId)
-                .orElseThrow(() -> new RuntimeException("Sto not found"));
+        Sto sto = stoRepository.findStoById(stoId);
         sto.addEmployee(employee);
         stoRepository.save(sto);
     }
 
     public void removeEmployeeFromSto(Long stoId, Employee employee) {
-        Sto sto = stoRepository.findById(stoId)
-                .orElseThrow(() -> new RuntimeException("Sto not found"));
+        Sto sto = stoRepository.findStoById(stoId);
         sto.removeEmployee(employee);
         stoRepository.save(sto);
     }

@@ -22,7 +22,7 @@ public class DetailProviderService {
     private final DetailProviderRepository detailProviderRepository;
 
     public List<DetailProvider> list() {
-        return detailProviderRepository.findAll();
+        return detailProviderRepository.findAllProviders();
     }
 
     public boolean saveProvider(DetailProvider detailProvider) {
@@ -35,32 +35,27 @@ public class DetailProviderService {
     }
 
     public void deleteProvider(Long id) {
-        DetailProvider provider = detailProviderRepository.findById(id)
-                .orElse(null);
+        DetailProvider provider = detailProviderRepository.findProviderById(id);
         if (provider != null) {
-            detailProviderRepository.delete(provider);
-            log.info("provider with id = {} was deleted", id);
+            detailProviderRepository.deleteProviderById(provider.getId());
+            log.info("Provider with id = {} was deleted", id);
         } else {
-            log.error("provider with id = {} is not found", id);
+            log.error("Provider with id = {} is not found", id);
         }
     }
 
 
     public void addDetailToProvider(Long providerId, Detail detail) {
-        DetailProvider detailProvider = detailProviderRepository.findById(providerId)
-                .orElseThrow(() -> new RuntimeException("Provider not found"));
+        DetailProvider detailProvider = detailProviderRepository.findProviderById(providerId);
         detailProvider.addDetail(detail);
         detailProviderRepository.save(detailProvider);
     }
 
     public void removeDetailFromProvider(Long providerId,  Detail detail) {
-        DetailProvider detailProvider = detailProviderRepository.findById(providerId)
-                .orElseThrow(() -> new RuntimeException("Provider not found"));
+        DetailProvider detailProvider = detailProviderRepository.findProviderById(providerId);
         detailProvider.removeDetail(detail);
         detailProviderRepository.save(detailProvider);
     }
-
-
 
     public Set<Detail> getProviderDetails(Long providerId) {
         return detailProviderRepository.getProviderDetails(providerId);

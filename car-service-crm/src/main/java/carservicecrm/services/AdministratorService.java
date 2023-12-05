@@ -25,6 +25,6 @@ public class AdministratorService {
     }
 
     public List<Administrator> list() {
-        return administratorRepository.findAll();
+        return administratorRepository.findAllAdmins();
     }
 }

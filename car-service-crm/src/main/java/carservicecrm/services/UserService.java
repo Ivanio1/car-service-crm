@@ -116,7 +116,6 @@ public class UserService {
     public void removeCarFromUser(Long userId, Car car) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
         user.removeCar(car);
         userRepository.save(user);
         carRepository.delete(car);

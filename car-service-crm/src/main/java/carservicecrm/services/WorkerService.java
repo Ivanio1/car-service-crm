@@ -25,7 +25,7 @@ public class WorkerService {
     }
 
     public List<Worker> list(){
-        return workerRepository.findAll();
+        return workerRepository.findAllWorkers();
     }
     public Worker getWorker(Long workerId) {
         return workerRepository.findWorkerById(workerId);

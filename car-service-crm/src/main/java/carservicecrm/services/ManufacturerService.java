@@ -26,6 +26,6 @@ public class ManufacturerService {
     }
 
     public List<Manufacturer> list() {
-        return manufacturerRepository.findAll();
+        return manufacturerRepository.findAllManufacturers();
     }
 }

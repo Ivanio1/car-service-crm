@@ -6,7 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface WorkerRepository extends JpaRepository<Worker,Long> {
+
+    @Query("SELECT c FROM Worker c")
+    List<Worker> findAllWorkers();
 
     @Query("SELECT u FROM Worker u WHERE u.id = :id")
     Worker findWorkerById(@Param("id") Long id);

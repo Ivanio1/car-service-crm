@@ -34,7 +34,7 @@ public class EmployeeService {
 
 
     public List<Employee> list() {
-        return employeeRepository.findAll();
+        return employeeRepository.findAllEmployees();
     }
 
 }
