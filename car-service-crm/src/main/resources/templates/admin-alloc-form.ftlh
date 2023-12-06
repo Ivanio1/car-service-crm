@@ -24,7 +24,7 @@
                 <label> Рабочий: <select name="worker" id="offer-select">
                         <option value="">--Выберите рабочего--</option>
                         <#list workers as worker>
-                            <option value="${worker.id}">${worker.employee.name} ${worker.employee.surname}</option>
+                            <option value="${worker.id}">${worker.employee.name} ${worker.employee.surname}-${worker.specialization}</option>
                         <#else>
                             <h1 style="text-align: center">Ничего не найдено</h1>
                         </#list>
