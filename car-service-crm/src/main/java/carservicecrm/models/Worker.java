@@ -2,6 +2,8 @@ package carservicecrm.models;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Set;
 
@@ -15,8 +17,13 @@ public class Worker {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Employee employee;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Purchase purchase;
+    @OneToMany(mappedBy = "worker",cascade={CascadeType.PERSIST})
+    private Set<Purchase> purchases;
+
+    @PreRemove
+    private void preRemove() {
+        purchases.forEach( child -> child.setWorker(null));
+    }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<WorkerRequest> workerRequests;
@@ -53,11 +60,11 @@ public class Worker {
         this.employee = employee;
     }
 
-    public Purchase getPurchase() {
-        return purchase;
+    public Set<Purchase> getPurchases() {
+        return purchases;
     }
 
-    public void setPurchase(Purchase purchase) {
-        this.purchase = purchase;
+    public void setPurchases(Set<Purchase> purchases) {
+        this.purchases = purchases;
     }
 }

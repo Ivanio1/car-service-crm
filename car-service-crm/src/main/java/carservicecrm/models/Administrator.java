@@ -16,9 +16,13 @@ public class Administrator {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Employee employee;
 
-    @OneToMany(mappedBy = "administrator",orphanRemoval = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "administrator",cascade={CascadeType.PERSIST})
     private Set<Purchase> purchases;
+
+    @PreRemove
+    private void preRemove() {
+        purchases.forEach( child -> child.setAdministrator(null));
+    }
 
     public Set<Purchase> getPurchases() {
         return purchases;

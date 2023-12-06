@@ -18,10 +18,10 @@
             <#list purchases as purchase>
                 <tr>
                     <td>${purchase.id}</td>
-                    <td>${purchase.car.brand} ${purchase.car.model}</td>
+                    <td>${(purchase.car.brand)!"null"} ${(purchase.car.model)!""}</td>
                     <td>${purchase.state}</td>
-                    <td><#list purchase.offers as offer>∘${offer.name}<br></#list></td>
-                    <td>${purchase.worker.employee.surname} ${purchase.worker.employee.name}</td>
+                    <td><#list purchase.offers as offer>∘${(offer.name)!"null"}<br></#list></td>
+                    <td>${(purchase.worker.employee.surname)!"null"} ${(purchase.worker.employee.name)!""}</td>
                 </tr>
             <#else>
                 <h3>Нет заказов</h3>

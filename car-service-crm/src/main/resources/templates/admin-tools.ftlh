@@ -41,7 +41,7 @@
         </table>
     </div>
     <hr>
-    <h2>Добавить инструмент</h2>
+    <h2>Добавить новый инструмент</h2>
     <form action="/admin/add/tool" method="post">
         <hr>
         <div>
@@ -70,6 +70,6 @@
         <br>
         <input type="hidden" value="${user.id}" name="userId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
-        <button id="saveButton" type="submit" class="btn btn-dark">Добавить</button>
+        <button id="saveButton" type="submit" class="btn btn-dark">Изменить</button>
     </form>
 </@t.template>

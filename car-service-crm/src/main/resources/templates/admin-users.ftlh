@@ -22,20 +22,24 @@
                 <td><#if user.active>true<#else>false</#if></td>
                 <td><#list user.roles as role>${role} </#list></td>
                 <td>
-                    <form action="/admin/user/ban/${user.id}" method="post">
-                        <input type="hidden" name="_csrf" value="${_csrf.token}">
-                        <input type="submit" class="btn btn-light" value="Бан">
-                    </form>
+                    <#if !user.isAdmin()>
+                        <form action="/admin/user/ban/${user.id}" method="post">
+                            <input type="hidden" name="_csrf" value="${_csrf.token}">
+                            <input type="submit" class="btn btn-light" value="Бан">
+                        </form>
+                    </#if>
                 </td>
                 <td><a href="/admin/user/edit/${user.id}">Редактировать</a></td>
                 <td><a href="/user/${user.id}">Смотреть</a></td>
                 <td>
-                    <form action="/delete/user/${user.id}" method="post">
-                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                        <button type="submit" class="btn btn-danger m-3">
-                            Удалить
-                        </button>
-                    </form>
+                    <#if !user.isAdmin()>
+                        <form action="/delete/user/${user.id}" method="post">
+                            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                            <button type="submit" class="btn btn-danger m-3">
+                                Удалить
+                            </button>
+                        </form>
+                    </#if>
                 </td>
             </tr>
         <#else>

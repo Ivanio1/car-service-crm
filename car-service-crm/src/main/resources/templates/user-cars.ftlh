@@ -8,24 +8,14 @@
             <th scope="col">Марка</th>
             <th scope="col">Модель</th>
             <th scope="col">Год выпуска</th>
-<#--            <th scope="col"></th>-->
         </tr>
         </thead>
         <tbody>
         <#list cars as car>
             <tr>
-                <td>${car.brand}</td>
-                <td>${car.model}</td>
-                <td>${car.creation_date?datetime?string('yyyy-MM-dd')}</td>
-<#--                <td>-->
-<#--                    <form action="/user/delete/car/${car.id}" method="post">-->
-<#--                        <input type="hidden" value="${user.email}" name="email">-->
-<#--                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
-<#--                        <button type="submit" class="btn btn-danger m-3">-->
-<#--                            Удалить-->
-<#--                        </button>-->
-<#--                    </form>-->
-<#--                </td>-->
+                <td>${(car.brand)!"null"}</td>
+                <td>${(car.model)!""}</td>
+                <td>${(car.creation_date?datetime?string('yyyy-MM-dd'))!""}</td>
             </tr>
         <#else>
             <h3>Нет машин</h3>

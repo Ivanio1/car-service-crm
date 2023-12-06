@@ -19,9 +19,9 @@
             <#list purchases as purchase>
                 <tr>
                     <td>${purchase.id}</td>
-                    <td>${purchase.car.brand} ${purchase.car.model}</td>
+                    <td>${(purchase.car.brand)!"null"} ${(purchase.car.model)!"null"}</td>
                     <td>${purchase.state}</td>
-                    <td><#list purchase.offers as offer>∘${offer.name}<br></#list></td>
+                    <td><#list purchase.offers as offer>∘${(offer.name)!"null"}<br></#list></td>
                     <td>
                         <form action="/admin/alloc/form/${purchase.id}" method="post">
                             <input type="hidden" value="${user.id}" name="userId">

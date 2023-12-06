@@ -84,7 +84,6 @@ public class UserController {
                 offerService.removePurchaseFromOffer(offer.getId(), purchase);
             }
         }
-
         userService.deleteUser(id);
         userService.deleteUser(id);
 

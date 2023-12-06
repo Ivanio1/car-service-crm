@@ -26,7 +26,7 @@ public class OfferService {
 
     public List<Offer> listOffers(String name) {
         if (name != null && !name.equals("")) return offerRepository.findAllByName(name);
-        return offerRepository.findAllOffers();
+        return offerRepository.findAll();
     }
 
     public User getUserByPrincipal(Principal principal) {
@@ -35,9 +35,8 @@ public class OfferService {
     }
 
     public Offer getOfferById(Long id) {
-        return offerRepository.findOfferById(id);
+        return offerRepository.findById(id).orElse(null);
     }
-
     public Offer getOfferByName(String name) {
         return offerRepository.findByName(name);
     }
@@ -81,7 +80,7 @@ public class OfferService {
         Offer product = offerRepository.findById(id)
                 .orElse(null);
         if (product != null) {
-            offerRepository.deleteOfferById(product.getId());
+            offerRepository.delete(product);
             log.info("Offer with id = {} was deleted", id);
         } else {
             log.error("Offer with id = {} is not found", id);
@@ -90,69 +89,81 @@ public class OfferService {
 
 
     public void addReviewToOffer(Long userId, Review review) {
-        Offer offer = offerRepository.findOfferById(userId);
+        Offer offer = offerRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Offer not found"));
+
         offer.addReview(review);
         offerRepository.save(offer);
     }
 
     public void removeReviewFromOffer(Long userId, Review review) {
-        try {
-            Offer offer = offerRepository.findOfferById(userId);
+        try{
+            Offer offer = offerRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("Offer not found"));
+
             offer.removeReview(review);
             offerRepository.save(offer);
             reviewRepository.deleteReviewById(review.getId());
-        } catch (Exception ignored) {
+        }catch (Exception ignored){
 
         }
     }
 
     public void addPurchaseToOffer(Long userId, Purchase purchase) {
-        Offer offer = offerRepository.findOfferById(userId);
+        Offer offer = offerRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Offer not found"));
+
         offer.addPurchase(purchase);
         offerRepository.save(offer);
     }
 
     public void removePurchaseFromOffer(Long userId, Purchase purchase) {
-        try {
-            Offer offer = offerRepository.findOfferById(userId);
+        try{
+            Offer offer = offerRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("Offer not found"));
+
             offer.removePurchase(purchase);
             offerRepository.save(offer);
             purchaseRepository.deletePurchaseById(purchase.getId());
-        } catch (Exception ignored) {
+        }catch (Exception ignored){
 
         }
     }
 
     public void addToolToOffer(Long userId, Tool tool) {
-        Offer offer = offerRepository.findOfferById(userId);
+        Offer offer = offerRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Offer not found"));
+
         offer.addTool(tool);
         offerRepository.save(offer);
     }
 
     public void removeToolFromOffer(Long userId, Tool tool) {
-        try {
-            Offer offer = offerRepository.findOfferById(userId);
+        try{
+            Offer offer = offerRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("Offer not found"));
             offer.removeTool(tool);
             offerRepository.save(offer);
             toolRepository.deleteToolById(tool.getId());
-        } catch (Exception ignored) {
+        }catch (Exception ignored){
 
         }
     }
-
     public void addDetailToOffer(Long userId, Detail detail) {
-        Offer offer = offerRepository.findOfferById(userId);
+        Offer offer = offerRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Offer not found"));
         offer.addDetail(detail);
         offerRepository.save(offer);
     }
 
     public void removeDetailFromOffer(Long userId, Detail detail) {
-        try {
-            Offer offer = offerRepository.findOfferById(userId);
+        try{
+            Offer offer = offerRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("Offer not found"));
             offer.removeDetail(detail);
             offerRepository.save(offer);
             detailRepository.deleteDetailById(detail.getId());
-        } catch (Exception ignored) {
+        }catch (Exception ignored){
 
         }
     }

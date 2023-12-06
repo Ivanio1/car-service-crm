@@ -51,8 +51,13 @@ public class User implements UserDetails {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Review> reviews;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST})
     private Set<Purchase> purchases;
+
+    @PreRemove
+    private void preRemove() {
+        purchases.forEach( child -> child.setUser(null));
+    }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Question> questions;

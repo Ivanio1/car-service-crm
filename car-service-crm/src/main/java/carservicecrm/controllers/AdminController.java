@@ -427,7 +427,6 @@ public class AdminController {
         Worker worker1 = workerService.getWorker(worker);
         purchase.setAdministrator(user.getEmployee().getAdministrator());
         purchase.setWorker(worker1);
-        worker1.setPurchase(purchase);
         purchaseService.savePurchase(purchase);
         return "redirect:/admin/allocated/purchases";
     }

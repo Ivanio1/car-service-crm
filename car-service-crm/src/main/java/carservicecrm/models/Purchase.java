@@ -20,23 +20,40 @@ public class Purchase {
     private Date closedat;
     private String stoName;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            },fetch = FetchType.EAGER)
     private User user;
 
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            },fetch = FetchType.EAGER)
     private Worker worker;
 
     @ManyToOne(cascade =
             {
-                    CascadeType.REMOVE
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
             },fetch = FetchType.EAGER)
     private Car car;
 
     @ManyToOne(cascade =
             {
-                    CascadeType.REMOVE
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
             },fetch = FetchType.EAGER)
     private Administrator administrator;
 
@@ -131,4 +148,6 @@ public class Purchase {
     public void setOffers(Set<Offer> offers) {
         this.offers = offers;
     }
+
+
 }

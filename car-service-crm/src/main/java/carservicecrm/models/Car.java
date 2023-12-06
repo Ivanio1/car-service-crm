@@ -21,9 +21,13 @@ public class Car {
     @ManyToMany(mappedBy = "cars",cascade = CascadeType.ALL)
     private Set<User> users = new HashSet<>();
 
-    @OneToMany(mappedBy = "car",orphanRemoval = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "car",cascade={CascadeType.PERSIST})
     private Set<Purchase> purchases;
+
+    @PreRemove
+    private void preRemove() {
+        purchases.forEach( child -> child.setCar(null));
+    }
 
     public Set<Purchase> getPurchases() {
         return purchases;
