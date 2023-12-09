@@ -26,7 +26,8 @@
             height: 40px;">
                             <#list details as detail>
                                 <div>
-                                    <label><input type="checkbox" name="${detail.name}">${detail.name}
+                                    <label><input type="checkbox" name="${detail.id}">${detail.name}
+                                        (Цена покупки-${detail.price}₽)
                                     </label>
                                 </div>
                             </#list>

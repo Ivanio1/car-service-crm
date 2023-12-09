@@ -408,7 +408,7 @@ public class AdminController {
                     if (tool != null) {
                         offerService.addToolToOffer(offer.getId(), tool);
                     } else {
-                        Detail detail = detailService.getDetailByName(key);
+                        Detail detail = detailService.getDetailById(Long.valueOf(key));
                         offerService.addDetailToOffer(offer.getId(),detail);
                     }
                 } catch (Exception e) {

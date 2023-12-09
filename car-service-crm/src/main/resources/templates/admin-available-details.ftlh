@@ -10,6 +10,7 @@
                 <th scope="col">Название</th>
                 <th scope="col">Количество у поставщиков</th>
                 <th scope="col">Поставщик</th>
+                <th scope="col">Цена</th>
             </tr>
             </thead>
             <tbody>
@@ -23,6 +24,7 @@
                             <h3>Нет поставщиков</h3>
                         </#list>
                     </td>
+                    <td>${detail.price}</td>
                 </tr>
             <#else>
                 <h3>Нет деталей</h3>

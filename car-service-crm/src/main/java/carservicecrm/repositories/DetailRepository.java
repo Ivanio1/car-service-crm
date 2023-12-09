@@ -15,6 +15,9 @@ public interface DetailRepository extends JpaRepository<Detail,Long> {
     @Query("SELECT q FROM Detail q WHERE q.id = :id")
     Detail findDetailById(Long id);
 
+    @Query("SELECT q FROM Detail q WHERE q.storagestock = :stock")
+    Detail findDetailByStoragestock(Integer stock);
+
     @Query("SELECT q FROM Detail q WHERE q.name = :name")
     Detail findByName(String name);
 

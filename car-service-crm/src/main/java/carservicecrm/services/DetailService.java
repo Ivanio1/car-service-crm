@@ -50,6 +50,10 @@ public class DetailService {
         return detailRepository.findDetailById(id);
     }
 
+    public Detail getDetailByStorageStock(Integer id) {
+        return detailRepository.findDetailByStoragestock(id);
+    }
+
     public Detail getDetailByName(String name) {
         return detailRepository.findByName(name);
     }
