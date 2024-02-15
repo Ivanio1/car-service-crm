@@ -10,10 +10,10 @@
    <a aria-label="Maven Project" href="https://maven.apache.org/">
       <img alt="" src="https://img.shields.io/badge/Maven-Project-FF69B4?style=for-the-badge&labelColor=000000&color=FF69B4">
    </a>
-   <a aria-label="Repo size" href="https://github.com/Ivanio1/exchange-bot">
+   <a aria-label="Repo size" href="https://github.com/Ivanio1/car-service-crm">
     <img alt="" src="https://img.shields.io/github/repo-size/Ivanio1/car-service-crm?style=for-the-badge&logo=github&labelColor=000000&color=008080">
   </a>
-  <a aria-label="Last commit" href="https://github.com/Ivanio1/exchange-bot/commits/master">
+  <a aria-label="Last commit" href="https://github.com/Ivanio1/car-service-crm/commits/master">
     <img alt="" src="https://img.shields.io/github/last-commit/Ivanio1/car-service-crm?style=for-the-badge&logo=git&labelColor=000000">
   </a>
 
